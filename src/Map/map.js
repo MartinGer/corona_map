@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import './state.css';
+import './map.css';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const countryList = require('country-list');
 const countries = countryList.getCodes();
 
-class State extends Component {
+class Maps extends Component {
   constructor(props) {
     super(props);
 
@@ -16,8 +17,9 @@ class State extends Component {
     this.sum_up_param = props.sum_up_param;
 
     this.state = {
-      full_result: null,
-      countries_result: []
+      lat: 37.7749,
+      lng: -122.4194,
+      zoom: 3,
     };
 
     this.setCoronaData = this.setCoronaData.bind(this);
@@ -28,42 +30,20 @@ class State extends Component {
 
   render() {
     const { full_result, countries_result} = this.state;
-    
-    if (!full_result || countries_result.length === 0) { return null; }
 
     return (
-      <div className="State">
-        <table className="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">State</th>
-            <th scope="col">Infected</th>
-            <th scope="col">Deaths</th>
-            <th scope="col">Recovered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Global</th>
-            <td>{full_result.infected}</td>
-            <td>{full_result.deaths}</td>
-            <td>{full_result.recovered}</td> 
-          </tr>
-          {
-          this.state.countries_result.map(country =>
-            <React.Fragment key={country.name}>
-              <tr>
-                <th scope="row">{country.name}</th>
-                <td>{country.infected}</td>
-                <td>{country.deaths}</td>
-                <td>{country.recovered}</td>
-              </tr>
-            </React.Fragment>
-            )
-          }
-        </tbody>
-      </table>
-    </div>
+      <div className="Map">
+        <Map 
+          center={[this.state.lat, this.state.lng]} 
+          zoom={this.state.zoom} 
+          style={{ width: '100%', height: '900px'}}
+        >
+        <TileLayer
+          attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </Map>
+      </div>
     );
   }
 
@@ -114,4 +94,4 @@ class State extends Component {
   }
 }
 
-export default State;
+export default Maps;
