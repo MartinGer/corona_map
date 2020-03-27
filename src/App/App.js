@@ -2,24 +2,21 @@ import React, { Component } from 'react';
 import './App.css';
 import State from '../State/state.js'
 
-const DEFAULT_QUERY = 'redux';
-const DEFAULT_HPP = '100';
-
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-//const QUERY = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
-const QUERY = "https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu/brief";
+const PATH_BASE = 'https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu';
+const PATH_LATEST = '/latest';
+const PATH_BRIEF =  '/brief';
+const PATH_SEARCH = 'iso2=';
+const COUNTRY_QUERY = `${PATH_BASE}${PATH_LATEST}?${PATH_SEARCH}`;
+const FULL_QUERY = `${PATH_BASE}${PATH_BRIEF}`;  //https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu/brief   
+const SUM_UP_PARAM = '&onlyCountries=true';
 
 class App extends Component {
 
   render() {
-    var helloWorld = 'Welcome to the Road to learn React!';
     return (
         <div className="App">
-          <h2>{helloWorld}</h2>
-          <State name="Berlin" QUERY={QUERY}></State>
+          <h2>Corona Map</h2>
+          <State name="Berlin" full_query={FULL_QUERY} country_query={COUNTRY_QUERY} sum_up_param={SUM_UP_PARAM}></State>
       </div>
     );
   }

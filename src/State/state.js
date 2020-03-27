@@ -3,49 +3,37 @@ import './state.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const data = [
-  {
-   infected: 10000,
-   healed:    2000,
-   dead:       800,
-   objectID:     0,
-  },
-];
+const countryList = require('country-list');
+const countries = countryList.getCodes();
 
 class State extends Component {
   constructor(props) {
     super(props);
 
     this.name = props.name;
-    this.searchTerm = props.QUERY;
+    this.fullSearch = props.full_query;
+    this.countrySearch = props.country_query;
+    this.sum_up_param = props.sum_up_param;
 
     this.state = {
-      data: data,
-      result: null,
+      full_result: null,
+      countries_result: []
     };
 
     this.setCoronaData = this.setCoronaData.bind(this);
     this.fetchCoronaData = this.fetchCoronaData.bind(this);
+    this.setFullCoronaData = this.setFullCoronaData.bind(this);
+    this.fetchFullCoronaData = this.fetchFullCoronaData.bind(this);
   }
 
   render() {
-    const { data, result } = this.state;
-
-    if (!result) { return null; }
+    const { full_result, countries_result} = this.state;
+    
+    if (!full_result || countries_result.length == 0) { return null; }
 
     return (
       <div className="State">
-        {
-          this.state.data.map(item =>
-            <div key={item.objectID} className="Data">
-             <h3>{this.name}</h3>
-              <p>Infected: {item.infected} </p>
-              <p>Healed: {item.healed} </p>
-              <p>Dead: {item.dead} </p>
-            </div>
-            )
-        }    
-        <table class="table table-dark">
+        <table className="table table-dark">
         <thead>
           <tr>
             <th scope="col">State</th>
@@ -57,47 +45,63 @@ class State extends Component {
         <tbody>
           <tr>
             <th scope="row">Global</th>
-            <td>{result.infected}</td>
-            <td>{result.deaths}</td>
-            <td>{result.recovered}</td>
+            <td>{full_result.infected}</td>
+            <td>{full_result.deaths}</td>
+            <td>{full_result.recovered}</td> 
           </tr>
-          <tr>
-            <th scope="row">Germany</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">USA</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {
+          this.state.countries_result.map(country =>
+            <React.Fragment key={country.name}>
+              <tr>
+                <th scope="row">{country.name}</th>
+                <td>{country.infected}</td>
+                <td>{country.deaths}</td>
+                <td>{country.recovered}</td>
+              </tr>
+            </React.Fragment>
+            )
+          }
         </tbody>
       </table>
     </div>
     );
   }
 
-  setCoronaData(result) {
-    console.log(typeof result);
-    console.log("da " + result);
-    console.log(result);
-    this.setState({ result: {
+  setFullCoronaData(result) {
+    this.setState({ full_result: {
       infected: result.confirmed,
       deaths: result.deaths,
       recovered: result.recovered,
-    } });
+      } 
+    });
   }
 
-  fetchCoronaData(searchTerm) {
-    console.log('fetch');
+  fetchFullCoronaData(searchTerm) {
     fetch(searchTerm, {
       method: 'GET', 
-    //   headers: {
-    //     "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
-	  //     "x-rapidapi-key": "SIGN-UP-FOR-KEY"
-    // },
+      })
+      .then(response => response.json())
+      .then(result => this.setFullCoronaData(result))
+      .catch(e => e);
+  }
+
+  setCoronaData(result) {
+    let cur_data = {
+      name: result[0].countryregion,
+      infected: result[0].confirmed,
+      deaths: result[0].deaths,
+      recovered: result[0].recovered,
+    }
+    let data = [...this.state.countries_result, cur_data];
+    this.setState({
+      countries_result: data
+    });
+  }
+
+  fetchCoronaData(country) {
+    let searchTerm = this.countrySearch + country + this.sum_up_param;
+    fetch(searchTerm, {
+      method: 'GET', 
       })
       .then(response => response.json())
       .then(result => this.setCoronaData(result))
@@ -105,8 +109,8 @@ class State extends Component {
   }
 
   componentDidMount() {
-    console.log(this.searchTerm);
-    this.fetchCoronaData(this.searchTerm);
+    this.fetchFullCoronaData(this.fullSearch);
+    countries.forEach(this.fetchCoronaData);
   }
 }
 
