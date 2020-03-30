@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './map.css';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const countryList = require('country-list');
 const countries = countryList.getCodes();
@@ -89,8 +89,8 @@ class Maps extends Component {
   }
 
   componentDidMount() {
-    this.fetchFullCoronaData(this.fullSearch);
-    countries.forEach(this.fetchCoronaData);
+    // this.fetchFullCoronaData(this.fullSearch);
+    // countries.forEach(this.fetchCoronaData);
   }
 }
 
