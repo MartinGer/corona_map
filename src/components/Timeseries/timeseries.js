@@ -46,24 +46,6 @@ class Timeseries extends Component {
     );
   }
 
-  setFullCoronaData(result) {
-    this.setState({ full_result: {
-      infected: result.confirmed,
-      deaths: result.deaths,
-      recovered: result.recovered,
-      } 
-    });
-  }
-
-  fetchFullCoronaData(searchTerm) {
-    fetch(searchTerm, {
-      method: 'GET', 
-      })
-      .then(response => response.json())
-      .then(result => this.setFullCoronaData(result))
-      .catch(e => e);
-  }
-
   setCoronaData(result) {
     let cur_data = {
       name: result[0].countryregion,

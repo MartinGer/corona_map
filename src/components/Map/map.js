@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './map.css';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
