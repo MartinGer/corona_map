@@ -14,12 +14,18 @@ class CountryList extends Component {
     this.country_data = props.country_data;
     this.full_data = props.full_data;
 
-    this.state = {};
+    this.state = {
+      full_data: props.full_data,
+    };
   }
 
   render() {
-    if (!this.full_data || this.country_data.length === 0) { return null; }
-    console.log(this.full_data)
+    console.log('render')
+    if (!this.state.full_data || this.country_data.length === 0) { 
+      console.log('keine daten')
+      return null; }
+    console.log('full data');
+    console.log(this.state.full_data)
     return (
       <div className="CountryList">
         <table className="table table-dark">
@@ -34,7 +40,7 @@ class CountryList extends Component {
         <tbody>
           <tr>
             <th scope="row">Global</th>
-            <td>{this.full_data.infected}</td>
+            <td>{this.state.full_data.infected}</td>
             <td>{this.full_data.deaths}</td>
             <td>{this.full_data.recovered}</td> 
           </tr>

@@ -23,8 +23,9 @@ class App extends Component {
     this.data_loader = new DataLoader();
 
     this.state = {
-      data: null,
-      full_data: null
+      full_data: null,
+      country_data: null,
+      cur_date: null,
     };
   }
   
@@ -34,10 +35,11 @@ class App extends Component {
           <h2>Corona Map</h2>
           <div className="Components">
             {console.log(this.state.full_data)}
-            {/* {console.log(this.state.data)} */}
-            {console.log(this.data_loader.full_data)}
-            {/* {console.log(this.data_loader.data)} */}
-            <CountryList cur_date={this.data_loader.cur_date} full_data={this.data_loader.full_data} country_data={this.data_loader.country_data}></CountryList>
+            {console.log(this.state.country_data)}
+            {console.log('render')}
+            {/* {console.log(this.data_loader.full_data)}
+            {console.log(this.data_loader.country_data)} */}
+            <CountryList cur_date={this.state.cur_date} full_data={this.state.full_data} country_data={this.state.country_data}></CountryList>
             {/* <State name="States" full_query={FULL_QUERY} country_query={COUNTRY_QUERY} sum_up_param={SUM_UP_PARAM}></State> */}
             <Maps></Maps>
           </div>
@@ -46,13 +48,15 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    // await this.data_loader.fetchFullCoronaData();
-    // const fetchCoronaData = this.data_loader.fetchCoronaData()
-    await countries.map(country => this.data_loader.fetchCoronaData(country));
+    await this.data_loader.fetchFullCoronaData();
+    for (const country of countries) {
+      await this.data_loader.fetchCoronaData(country);
+    }
 
     this.setState({
-      data: this.data_loader.data,
-      full_data: this.data_loader.full_data
+      full_data: this.data_loader.full_data,
+      country_data: this.data_loader.country_data,
+      cur_date: this.data_loader.cur_date,
     })
   }
 }
