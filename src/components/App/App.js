@@ -48,10 +48,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    await this.data_loader.fetchFullCoronaData();
-    for (const country of countries) {
-      await this.data_loader.fetchCoronaData(country);
-    }
+    // await this.data_loader.fetchFullCoronaData();
+    // // for (const country of countries) {
+    await this.data_loader.fetchCoronaData();
+    // }
 
     this.setState({
       full_data: this.data_loader.full_data,

@@ -1,4 +1,4 @@
-import CountryInfo from './CountryInfo';
+import CountryInfo from './CountryInfo.js';
 
 const PATH_BASE = 'https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu';
 const PATH_TIMESERIES = '/timeseries';
@@ -32,11 +32,16 @@ class DataLoader {
         };
       }
 
-    fetchCoronaData = (country) => {
-        let searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
-        return axios.get(searchTerm)
-            .then(response => this.setCoronaData(response.data[0]))
-            .catch(e => e);
+    fetchCoronaData = async () => {
+        // console.log(countries)
+        for await (const country of countries) {
+            
+            let searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
+            // console.log(searchTerm)
+            axios.get(searchTerm)
+                .then(response => this.setCoronaData(response.data[0]))
+                .catch(e => e);
+        }
     }
 
     setCoronaData = (result) => {
@@ -44,13 +49,16 @@ class DataLoader {
         let location = result.location;
         let countrycode = result.countrycode;
         let timeseries = result.timeseries;
+        // console.log(result)
         for (const [key, value] of Object.entries(timeseries)) {
-            const countryInfo = new CountryInfo(  countrycode,
-                                            location, 
+            console.log(countrycode.iso2, [location.lat, location.lng], value)
+            let countryInfo = new CountryInfo(countrycode.iso2,
+                                            [location.lat, location.lng], 
                                             value.confirmed, 
                                             value.deaths,
                                             value.recovered
                                             );
+            console.log(countryInfo)
             this.fillCoronaData(key, country, countryInfo);
         };
         if (this.cur_date === null) {
@@ -58,12 +66,14 @@ class DataLoader {
         };
     }
 
-    fillCoronaData = async(timestamp, country, countryInfo) => {
+    fillCoronaData = (timestamp, country, countryInfo) => {
         if (!this.country_data[timestamp]) {
             this.country_data[timestamp] = [];
         }
+        // console.log(countryInfo)
         this.country_data[timestamp].push({country: countryInfo});
     }
 }
 
 export default DataLoader;
+

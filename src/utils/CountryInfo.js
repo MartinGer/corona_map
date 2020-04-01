@@ -1,9 +1,8 @@
 class CountryInfo {
-    contructor(country, countryCode, location, infected, deaths, recovered) {
-        this.country     =  country;
+    constructor(countryCode, location, confirmed, deaths, recovered) {
         this.countryCode =  countryCode;
         this.location    =  location;
-        this.infected    =  infected;
+        this.confirmed   =  confirmed;
         this.deaths      =  deaths;
         this.recovered   =  recovered;
     }
