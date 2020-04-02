@@ -40,9 +40,8 @@ class DataLoader {
             await axios.get(searchTerm)
             .then(response => this.setCoronaData(response.data[0]))
             .catch(e => e);  
-            console.log(this.country_data)
         }; 
-        return this.country_data, this.cur_date;
+        return [this.country_data, this.cur_date];
     }
       
     setCoronaData = (result) => {
@@ -61,7 +60,6 @@ class DataLoader {
         };
         if (this.cur_date === null) {
             this.cur_date = Object.keys(timeseries).pop();
-            console.log(this.cur_date)
         };
     }
 

@@ -18,28 +18,18 @@ class CountryList extends Component {
   }
 
   render() {
-    const data = this.props.country_data
-    // console.log('render List')
-    // console.log(this.props.full_data)
-    // console.log(this.props.country_data)
-    if (!this.props.full_data || !this.props.country_data) { 
+    const country_data = this.props.country_data
+    const full_data = this.props.full_data
+    const cur_date = this.props.cur_date
+    console.log(full_data)
+    console.log(country_data)
+    console.log(this.props.country_data)
+    console.log(cur_date)
+    if (!full_data || !country_data) { 
       console.log('keine daten')
       return null; 
     };
 
-    // if (this.state.cur_date === null && this.props.country_data) {
-    //   console.log(this.props.country_data)
-    //   console.log(Object.keys(this.props.country_data[0]))
-    //   this.setState = {
-    //     cur_date: Object.keys(this.props.country_data).pop()
-    //   };
-    //   console.log('set state')
-    //   console.log(this.state.cur_date)
-    // };
-
-    // console.log('full data');
-    // console.log(this.props.country_data)
-    console.log(this.props.cur_date)
     return (
       <div className="CountryList">
         <table className="table table-dark">
@@ -54,9 +44,9 @@ class CountryList extends Component {
         <tbody>
           <tr>
             <th scope="row">Global</th>
-            <td>{this.props.full_data.infected}</td>
-            <td>{this.props.full_data.deaths}</td>
-            <td>{this.props.full_data.recovered}</td> 
+            <td>{full_data.infected}</td>
+            <td>{full_data.deaths}</td>
+            <td>{full_data.recovered}</td> 
           </tr>
           {/* {
           this.state.countries_result.map(country =>

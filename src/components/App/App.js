@@ -5,17 +5,6 @@ import CountryList from '../CountryList/countryList.js';
 import Maps from '../Map/map.js';
 import DataLoader from '../../utils/DataLoader.js';
 
-// const PATH_BASE = 'https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu';
-// const PATH_LATEST = '/latest';
-// const PATH_BRIEF =  '/brief';
-// const PATH_SEARCH = 'iso2=';
-// const COUNTRY_QUERY = `${PATH_BASE}${PATH_LATEST}?${PATH_SEARCH}`;
-// const FULL_QUERY = `${PATH_BASE}${PATH_BRIEF}`;  //https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu/brief   
-// const SUM_UP_PARAM = '&onlyCountries=true';
-
-// const countryList = require('country-list');
-// const countries = countryList.getCodes();
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -44,8 +33,9 @@ class App extends Component {
 
   async componentDidMount() {
     let full_data = await this.data_loader.fetchFullCoronaData();
-    let country_data, cur_date = await this.data_loader.fetchCoronaData();
-
+    let timeseries_data = await this.data_loader.fetchCoronaData();
+    let country_data = timeseries_data[0];
+    let cur_date = timeseries_data[1];
     this.setState({
       full_data: full_data,
       country_data: country_data,
