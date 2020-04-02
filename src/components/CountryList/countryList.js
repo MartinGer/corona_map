@@ -62,7 +62,7 @@ class CountryList extends Component {
     </div>
     );
   }
-
+  
   componentDidMount() {
     console.log('list did mount')
   }

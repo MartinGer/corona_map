@@ -11,11 +11,14 @@ const SUM_UP_PARAM = '&onlyCountries=false';
 const countryList = require('country-list');
 const countries = countryList.getCodes();
 
+const {Dataset} = require('data.js')
+const GEOJSON_PATH = 'https://datahub.io/core/geo-countries/datapackage.json'
+
 const axios = require('axios').default;
 
 class DataLoader {
     country_data = {};
-    full_data = {}
+    full_data = {};
     cur_date = null;
 
     fetchFullCoronaData = async () => {
@@ -70,6 +73,26 @@ class DataLoader {
         }
         this.country_data[timestamp].push(countryInfo);
     }
+
+    // ;(async () => {
+    //     const dataset = await Dataset.load(GEOJSON_PATH)
+    //     // get list of all resources:
+    //     for (const id in dataset.resources) {
+    //       console.log(dataset.resources[id]._descriptor.name)
+    //     }
+    //     // get all tabular data(if exists any)
+    //     for (const id in dataset.resources) {
+    //       if (dataset.resources[id]._descriptor.format === "csv") {
+    //         const file = dataset.resources[id]
+    //         // Get a raw stream
+    //         const stream = await file.stream()
+    //         // entire file as a buffer (be careful with large files!)
+    //         const buffer = await file.buffer
+    //         // print data
+    //         stream.pipe(process.stdout)
+    //       }
+    //     }
+    // })()
 }
 
 export default DataLoader;
