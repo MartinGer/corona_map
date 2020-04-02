@@ -74,6 +74,6 @@ render() {
       </Map>
     </div>
   );
-};
+}
 
 export default Timeseries;
