@@ -50,24 +50,25 @@ class DataLoader {
         let countrycode = result.countrycode;
         let timeseries = result.timeseries;
         for (const [key, value] of Object.entries(timeseries)) {
-            let countryInfo = new CountryInfo(countrycode.iso2,
+            let countryInfo = new CountryInfo(country,
+                                            countrycode.iso2,
                                             [location.lat, location.lng], 
                                             value.confirmed, 
                                             value.deaths,
                                             value.recovered
                                             );
-            this.fillCoronaData(key, country, countryInfo);
+            this.fillCoronaData(key, countryInfo);
         };
         if (this.cur_date === null) {
             this.cur_date = Object.keys(timeseries).pop();
         };
     }
 
-    fillCoronaData = (timestamp, country, countryInfo) => {
+    fillCoronaData = (timestamp, countryInfo) => {
         if (!this.country_data[timestamp]) {
             this.country_data[timestamp] = [];
         }
-        this.country_data[timestamp].push({country: countryInfo});
+        this.country_data[timestamp].push(countryInfo);
     }
 }
 
