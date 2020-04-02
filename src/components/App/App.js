@@ -44,18 +44,13 @@ class App extends Component {
 
   async componentDidMount() {
     let full_data = await this.data_loader.fetchFullCoronaData();
-    let country_data = await this.data_loader.fetchCoronaData();
+    let country_data, cur_date = await this.data_loader.fetchCoronaData();
 
     this.setState({
       full_data: full_data,
       country_data: country_data,
-      cur_date: this.data_loader.cur_date,
+      cur_date: cur_date,
     });
-    console.log('mounted')
-    console.log(this.state.cur_date)
-    for (const c in this.state.country_data) {
-      console.log(c)
-    }
   }
 }
 

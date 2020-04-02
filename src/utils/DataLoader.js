@@ -42,7 +42,7 @@ class DataLoader {
             .catch(e => e);  
             console.log(this.country_data)
         }; 
-        return this.country_data;
+        return this.country_data, this.cur_date;
     }
       
     setCoronaData = (result) => {
