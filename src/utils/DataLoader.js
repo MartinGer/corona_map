@@ -18,51 +18,50 @@ class DataLoader {
     full_data = {}
     cur_date = null;
 
-    fetchFullCoronaData = () => {
-        return axios.get(FULL_QUERY)
-            .then(response => this.setFullCoronaData(response.data))
-            .catch(e => e);
+    fetchFullCoronaData = async () => {
+        const response = await axios.get(FULL_QUERY);
+        const full_data = this.setFullCoronaData(response.data);
+        return full_data;
     }
 
     setFullCoronaData = (result) => {
-        this.full_data = {
+        const full_data = {
           infected: result.confirmed,
           deaths: result.deaths,
           recovered: result.recovered,
         };
+        return full_data;
       }
-
+    
     fetchCoronaData = async () => {
-        // console.log(countries)
-        for await (const country of countries) {
-            
-            let searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
-            // console.log(searchTerm)
-            axios.get(searchTerm)
-                .then(response => this.setCoronaData(response.data[0]))
-                .catch(e => e);
-        }
+        let countries = ['US', 'GB', 'AU', 'GR'];  // TODO: Parallize calls to be faster
+        for (const country of countries) {
+            const searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
+            await axios.get(searchTerm)
+            .then(response => this.setCoronaData(response.data[0]))
+            .catch(e => e);  
+            console.log(this.country_data)
+        }; 
+        return this.country_data;
     }
-
+      
     setCoronaData = (result) => {
         let country = result.countryregion;
         let location = result.location;
         let countrycode = result.countrycode;
         let timeseries = result.timeseries;
-        // console.log(result)
         for (const [key, value] of Object.entries(timeseries)) {
-            console.log(countrycode.iso2, [location.lat, location.lng], value)
             let countryInfo = new CountryInfo(countrycode.iso2,
                                             [location.lat, location.lng], 
                                             value.confirmed, 
                                             value.deaths,
                                             value.recovered
                                             );
-            console.log(countryInfo)
             this.fillCoronaData(key, country, countryInfo);
         };
         if (this.cur_date === null) {
             this.cur_date = Object.keys(timeseries).pop();
+            console.log(this.cur_date)
         };
     }
 
@@ -70,7 +69,6 @@ class DataLoader {
         if (!this.country_data[timestamp]) {
             this.country_data[timestamp] = [];
         }
-        // console.log(countryInfo)
         this.country_data[timestamp].push({country: countryInfo});
     }
 }

@@ -10,22 +10,36 @@ class CountryList extends Component {
   constructor(props) {
     super(props);
 
-    this.cur_date = props.cur_date;
-    this.country_data = props.country_data;
-    this.full_data = props.full_data;
-
     this.state = {
-      full_data: props.full_data,
+      cur_date: null,
+      full_data: null,
+      country_data: {}
     };
   }
 
   render() {
-    console.log('render')
-    if (!this.state.full_data || this.country_data.length === 0) { 
+    const data = this.props.country_data
+    // console.log('render List')
+    // console.log(this.props.full_data)
+    // console.log(this.props.country_data)
+    if (!this.props.full_data || !this.props.country_data) { 
       console.log('keine daten')
-      return null; }
-    console.log('full data');
-    console.log(this.state.full_data)
+      return null; 
+    };
+
+    // if (this.state.cur_date === null && this.props.country_data) {
+    //   console.log(this.props.country_data)
+    //   console.log(Object.keys(this.props.country_data[0]))
+    //   this.setState = {
+    //     cur_date: Object.keys(this.props.country_data).pop()
+    //   };
+    //   console.log('set state')
+    //   console.log(this.state.cur_date)
+    // };
+
+    // console.log('full data');
+    // console.log(this.props.country_data)
+    console.log(this.props.cur_date)
     return (
       <div className="CountryList">
         <table className="table table-dark">
@@ -40,9 +54,9 @@ class CountryList extends Component {
         <tbody>
           <tr>
             <th scope="row">Global</th>
-            <td>{this.state.full_data.infected}</td>
-            <td>{this.full_data.deaths}</td>
-            <td>{this.full_data.recovered}</td> 
+            <td>{this.props.full_data.infected}</td>
+            <td>{this.props.full_data.deaths}</td>
+            <td>{this.props.full_data.recovered}</td> 
           </tr>
           {/* {
           this.state.countries_result.map(country =>
@@ -62,10 +76,22 @@ class CountryList extends Component {
     );
   }
 
-  // componentDidMount() {
-  //   this.fetchFullCoronaData(this.fullSearch);
-  //   countries.forEach(this.fetchCoronaData);
-  // }
+  componentDidMount() {
+    console.log('list did mount')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('props are updated')
+    // this.setState({ data: nextProps.data });  
+    console.log(this.props.country_data)
+    if (this.props.country_data) {
+      console.log('daten sind da')
+      this.setState = {
+        cur_date: Object.keys(this.props.country_data).pop()
+      };
+    };
+    console.log(this.state.cur_date);
+  }
 }
 
 export default CountryList;
