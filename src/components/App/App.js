@@ -22,7 +22,6 @@ export default class App extends Component {
     const timeseriesData = await this.data_loader.fetchCoronaData();
     const countryData = timeseriesData[0];
     const curDate = timeseriesData[1];
-    console.log(countryData);
     this.setState({
       fullData,
       countryData,

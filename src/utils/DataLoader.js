@@ -38,22 +38,22 @@ export default class DataLoader {
     }
 
     fetchCoronaData = async () => {
-        const countries = ['US', 'GB', 'AU', 'GR']; // TODO: Parallize calls to be faster
-        for (const country of countries) {
-          const searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
-          await axios.get(searchTerm)
-            .then((response) => this.setCoronaData(response.data[0]))
-            .catch((e) => e);
-        }
-        return [this.countryData, this.curDate];
-      }
+      await Promise.all(countries.map(async (country) => {
+        const searchTerm = COUNTRY_QUERY + country + SUM_UP_PARAM;
+        await axios.get(searchTerm)
+          .then((response) => this.setCoronaData(response.data[0]))
+          .catch((e) => e);
+      }));
+      return [this.countryData, this.curDate];
+    }
 
     setCoronaData = (result) => {
       const country = result.countryregion;
       const { location } = result;
       const { countrycode } = result;
       const { timeseries } = result;
-      for (const [key, value] of Object.entries(timeseries)) {
+
+      Object.entries(timeseries).map(([key, value]) => {
         const countryInfo = new CountryInfo(country,
           countrycode.iso2,
           [location.lat, location.lng],
@@ -61,11 +61,30 @@ export default class DataLoader {
           value.deaths,
           value.recovered);
         this.fillCoronaData(key, countryInfo);
-      }
+      });
       if (this.curDate === null) {
         this.curDate = Object.keys(timeseries).pop();
       }
     }
+
+    // setCoronaData = (result) => {
+    //   const country = result.countryregion;
+    //   const { location } = result;
+    //   const { countrycode } = result;
+    //   const { timeseries } = result;
+    //   for (const [key, value] of Object.entries(timeseries)) {
+    //     const countryInfo = new CountryInfo(country,
+    //       countrycode.iso2,
+    //       [location.lat, location.lng],
+    //       value.confirmed,
+    //       value.deaths,
+    //       value.recovered);
+    //     this.fillCoronaData(key, countryInfo);
+    //   }
+    //   if (this.curDate === null) {
+    //     this.curDate = Object.keys(timeseries).pop();
+    //   }
+    // }
 
     fillCoronaData = (timestamp, countryInfo) => {
       if (!this.countryData[timestamp]) {

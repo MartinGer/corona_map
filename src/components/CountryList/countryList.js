@@ -19,8 +19,6 @@ export default class CountryList extends Component {
       console.log('keine daten');
       return null;
     }
-    console.log(curDate);
-    console.log(countryData[curDate]);
     return (
       <div className="CountryList">
         <table className="table table-dark">
