@@ -7,7 +7,7 @@ const countryList = require('country-list');
 
 const countries = countryList.getCodes();
 
-class Timeseries extends Component {
+export default class Timeseries extends Component {
   constructor(props) {
     super(props);
 

@@ -1,52 +1,46 @@
 import React, { Component } from 'react';
 import './countryList.css';
 
+import PropTypes from 'prop-types';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const countryList = require('country-list');
-const countries = countryList.getCodes();
-
-class CountryList extends Component {
+export default class CountryList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      cur_date: null,
-      full_data: null,
-      country_data: {}
-    };
+    this.state = {};
   }
 
   render() {
-    const country_data = this.props.country_data
-    const full_data = this.props.full_data
-    const cur_date = this.props.cur_date
+    const { fullData, countryData, curDate } = this.props;
 
-    if (!full_data || !country_data) { 
-      console.log('keine daten')
-      return null; 
-    };
-
+    if (!fullData || !countryData) {
+      console.log('keine daten');
+      return null;
+    }
+    console.log(curDate);
+    console.log(countryData[curDate]);
     return (
       <div className="CountryList">
         <table className="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">State</th>
-            <th scope="col">Infected</th>
-            <th scope="col">Deaths</th>
-            <th scope="col">Recovered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Global</th>
-            <td>{full_data.infected}</td>
-            <td>{full_data.deaths}</td>
-            <td>{full_data.recovered}</td> 
-          </tr>
-          {
-          country_data[cur_date].map(countryInfo =>
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col">Infected</th>
+              <th scope="col">Deaths</th>
+              <th scope="col">Recovered</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Global</th>
+              <td>{fullData.infected}</td>
+              <td>{fullData.deaths}</td>
+              <td>{fullData.recovered}</td>
+            </tr>
+            {
+          countryData[curDate].map((countryInfo) => (
             <React.Fragment key={countryInfo.countryCode}>
               <tr>
                 <th scope="row">{countryInfo.country}</th>
@@ -55,17 +49,23 @@ class CountryList extends Component {
                 <td>{countryInfo.recovered}</td>
               </tr>
             </React.Fragment>
-            )
+          ))
           }
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
     );
-  }
-  
-  componentDidMount() {
-    console.log('list did mount')
   }
 }
 
-export default CountryList;
+CountryList.defaultProps = {
+  fullData: {},
+  countryData: {},
+  curDate: '',
+};
+
+CountryList.propTypes = {
+  fullData: PropTypes.objectOf(PropTypes.number),
+  countryData: PropTypes.objectOf(PropTypes.array),
+  curDate: PropTypes.string,
+};
