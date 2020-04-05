@@ -1,4 +1,4 @@
-import CountryInfo from './CountryInfo.js';
+import CountryInfo from './CountryInfo';
 
 const PATH_BASE = 'https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu';
 const PATH_TIMESERIES = '/timeseries';
@@ -16,6 +16,10 @@ const GEOJSON_PATH = 'https://datahub.io/core/geo-countries/datapackage.json';
 const axios = require('axios').default;
 
 export default class DataLoader {
+  constructor() {
+    this.fetchGeoJSON();
+  }
+
     countryData = {};
 
     fullData = {};
@@ -53,7 +57,7 @@ export default class DataLoader {
       const { countrycode } = result;
       const { timeseries } = result;
 
-      Object.entries(timeseries).map(([key, value]) => {
+      Object.entries(timeseries).forEach(([key, value]) => {
         const countryInfo = new CountryInfo(country,
           countrycode.iso2,
           [location.lat, location.lng],
@@ -67,25 +71,6 @@ export default class DataLoader {
       }
     }
 
-    // setCoronaData = (result) => {
-    //   const country = result.countryregion;
-    //   const { location } = result;
-    //   const { countrycode } = result;
-    //   const { timeseries } = result;
-    //   for (const [key, value] of Object.entries(timeseries)) {
-    //     const countryInfo = new CountryInfo(country,
-    //       countrycode.iso2,
-    //       [location.lat, location.lng],
-    //       value.confirmed,
-    //       value.deaths,
-    //       value.recovered);
-    //     this.fillCoronaData(key, countryInfo);
-    //   }
-    //   if (this.curDate === null) {
-    //     this.curDate = Object.keys(timeseries).pop();
-    //   }
-    // }
-
     fillCoronaData = (timestamp, countryInfo) => {
       if (!this.countryData[timestamp]) {
         this.countryData[timestamp] = [];
@@ -93,23 +78,10 @@ export default class DataLoader {
       this.countryData[timestamp].push(countryInfo);
     }
 
-  // ;(async () => {
-  //     const dataset = await Dataset.load(GEOJSON_PATH)
-  //     // get list of all resources:
-  //     for (const id in dataset.resources) {
-  //       console.log(dataset.resources[id]._descriptor.name)
-  //     }
-  //     // get all tabular data(if exists any)
-  //     for (const id in dataset.resources) {
-  //       if (dataset.resources[id]._descriptor.format === "csv") {
-  //         const file = dataset.resources[id]
-  //         // Get a raw stream
-  //         const stream = await file.stream()
-  //         // entire file as a buffer (be careful with large files!)
-  //         const buffer = await file.buffer
-  //         // print data
-  //         stream.pipe(process.stdout)
-  //       }
-  //     }
-  // })()
+    fetchGeoJSON = async () => {
+      const dataset = await Dataset.load(GEOJSON_PATH);
+      dataset.resources.map((data) => {
+        console.log(data);
+      });
+    }
 }

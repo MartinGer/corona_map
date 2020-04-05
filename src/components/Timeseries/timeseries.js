@@ -58,7 +58,7 @@ export default class Timeseries extends Component {
 }
 
 render() {
-  const { full_result, countries_result} = this.state;
+  const { full_result, countries_result } = this.state;
 
   return (
     <div className="Map">
