@@ -22,6 +22,7 @@ export default class App extends Component {
     const timeseriesData = await this.data_loader.fetchCoronaData();
     const countryData = timeseriesData[0];
     const curDate = timeseriesData[1];
+
     this.setState({
       fullData,
       countryData,
@@ -31,12 +32,12 @@ export default class App extends Component {
 
   render() {
     const { curDate, fullData, countryData } = this.state;
+
     return (
       <div className="App">
         <h2>Corona Map</h2>
         <div className="Components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
-          <Maps />
         </div>
       </div>
     );

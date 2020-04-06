@@ -10,16 +10,10 @@ const SUM_UP_PARAM = '&onlyCountries=false';
 const countryList = require('country-list');
 
 const countries = countryList.getCodes();
-const { Dataset } = require('data.js');
 
-const GEOJSON_PATH = 'https://datahub.io/core/geo-countries/datapackage.json';
 const axios = require('axios').default;
 
 export default class DataLoader {
-  constructor() {
-    this.fetchGeoJSON();
-  }
-
     countryData = {};
 
     fullData = {};
@@ -76,12 +70,5 @@ export default class DataLoader {
         this.countryData[timestamp] = [];
       }
       this.countryData[timestamp].push(countryInfo);
-    }
-
-    fetchGeoJSON = async () => {
-      const dataset = await Dataset.load(GEOJSON_PATH);
-      dataset.resources.map((data) => {
-        console.log(data);
-      });
     }
 }
