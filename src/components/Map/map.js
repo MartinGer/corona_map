@@ -16,9 +16,10 @@ export default class Maps extends Component {
     super(props);
 
     this.state = {
-      lat: 0,
+      lat: 36,
       lng: 0,
-      zoom: 2,
+      zoom: 3,
+      zoomSnap: 0.88,
     };
   }
 
@@ -60,14 +61,15 @@ export default class Maps extends Component {
   // }
 
   render() {
-    const { lat, lng, zoom } = this.state;
+    const { lat, lng, zoom, zoomSnap } = this.state;
 
     return (
       <div className="Map">
         <Map
           center={[lat, lng]}
           zoom={zoom}
-          style={{ width: '100%', height: '900px' }}
+          zoomSnap={zoomSnap}
+          style={{ width: '100%', height: '100%' }}
           worldCopyJump
         >
           <GeoJSON data={geoJSON} />

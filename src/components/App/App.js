@@ -35,7 +35,6 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <h2>Corona Map</h2>
         <div className="Components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
           <Maps />
