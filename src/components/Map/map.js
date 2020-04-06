@@ -16,9 +16,9 @@ export default class Maps extends Component {
     super(props);
 
     this.state = {
-      lat: 37.7749,
-      lng: -122.4194,
-      zoom: 3,
+      lat: 0,
+      lng: 0,
+      zoom: 2,
     };
   }
 
@@ -68,6 +68,7 @@ export default class Maps extends Component {
           center={[lat, lng]}
           zoom={zoom}
           style={{ width: '100%', height: '900px' }}
+          worldCopyJump
         >
           <GeoJSON data={geoJSON} />
           <TileLayer

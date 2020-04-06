@@ -15,10 +15,33 @@ export default class CountryList extends Component {
   render() {
     const { fullData, countryData, curDate } = this.props;
 
-    if (!fullData || !countryData) {
-      console.log('keine daten');
-      return null;
+    let summarizedData;
+    let seperateData;
+    if (fullData) {
+      summarizedData = (
+        <tr>
+          <th scope="row">Global</th>
+          <td>{fullData.infected}</td>
+          <td>{fullData.deaths}</td>
+          <td>{fullData.recovered}</td>
+        </tr>
+      );
     }
+    if (countryData) {
+      seperateData = (
+        countryData[curDate].map((countryInfo) => (
+          <React.Fragment key={countryInfo.countryCode}>
+            <tr>
+              <th scope="row">{countryInfo.country}</th>
+              <td>{countryInfo.confirmed}</td>
+              <td>{countryInfo.deaths}</td>
+              <td>{countryInfo.recovered}</td>
+            </tr>
+          </React.Fragment>
+        ))
+      );
+    }
+
     return (
       <div className="CountryList">
         <table className="table table-dark">
@@ -31,24 +54,8 @@ export default class CountryList extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">Global</th>
-              <td>{fullData.infected}</td>
-              <td>{fullData.deaths}</td>
-              <td>{fullData.recovered}</td>
-            </tr>
-            {
-          countryData[curDate].map((countryInfo) => (
-            <React.Fragment key={countryInfo.countryCode}>
-              <tr>
-                <th scope="row">{countryInfo.country}</th>
-                <td>{countryInfo.confirmed}</td>
-                <td>{countryInfo.deaths}</td>
-                <td>{countryInfo.recovered}</td>
-              </tr>
-            </React.Fragment>
-          ))
-          }
+            {summarizedData}
+            {seperateData}
           </tbody>
         </table>
       </div>
