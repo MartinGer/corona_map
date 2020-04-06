@@ -51,6 +51,7 @@ export default class CountryList extends Component {
               <th scope="col">Infected</th>
               <th scope="col">Deaths</th>
               <th scope="col">Recovered</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
