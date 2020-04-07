@@ -47,11 +47,10 @@ export default class CountryList extends Component {
         <table className="table table-dark">
           <thead>
             <tr>
-              <th scope="col">State</th>
-              <th scope="col">Infected</th>
-              <th scope="col">Deaths</th>
-              <th scope="col">Recovered</th>
-              <th> </th>
+              <th scope="col" className="header">State</th>
+              <th scope="col" className="header">Infected</th>
+              <th scope="col" className="header">Deaths</th>
+              <th scope="col" className="header">Recovered</th>
             </tr>
           </thead>
           <tbody>

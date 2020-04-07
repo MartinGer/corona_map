@@ -37,7 +37,7 @@ export default class App extends Component {
       <div className="App">
         <div className="Components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
-          <Maps />
+          <Maps curDate={curDate} countryData={countryData} />
         </div>
       </div>
     );

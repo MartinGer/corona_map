@@ -2,19 +2,22 @@
   width: 15%;
 }
 
-.table thead {
-  display:block;
-  padding-left: 7%;
+table {
+  width: 100%;
 }
 
-.table tbody {
-  display:block;
-  overflow:auto;
-  height: 100vh;
+table tbody {
+  display: block;
+  overflow-y: scroll;
+  max-height: 100vh;
 }
 
-.th, .td {
-  width: 25%,
+thead {
+  overflow-y: scroll;
 }
 
-
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}

@@ -60,8 +60,23 @@ export default class Maps extends Component {
   //   return <GeoJSON data={geoJSON} />;
   // }
 
+  getColor = (d) => {
+    return d > 1000 ? '#800026'
+      : d > 500 ? '#BD0026'
+        : d > 200 ? '#E31A1C'
+          : d > 100 ? '#FC4E2A'
+            : d > 50 ? '#FD8D3C'
+              : d > 20 ? '#FEB24C'
+                : d > 10 ? '#FED976'
+                  : '#FFEDA0';
+  }
+
   render() {
-    const { lat, lng, zoom, zoomSnap } = this.state;
+    const {
+      lat, lng, zoom, zoomSnap,
+    } = this.state;
+
+    const { curDate, countryData } = this.props;
 
     return (
       <div className="Map">
@@ -69,10 +84,23 @@ export default class Maps extends Component {
           center={[lat, lng]}
           zoom={zoom}
           zoomSnap={zoomSnap}
-          style={{ width: '100%', height: '100%' }}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
           worldCopyJump
         >
-          <GeoJSON data={geoJSON} />
+          <GeoJSON
+            data={geoJSON}
+            style={{
+              fillColor: this.getColor(500),
+              weight: 2,
+              opacity: 1,
+              color: 'white',
+              dashArray: '3',
+              fillOpacity: 0.7,
+            }}
+          />
           <TileLayer
             attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
