@@ -16,6 +16,8 @@ export default class Maps extends Component {
     super(props);
     this.todaysData = {};
     this.maxConfirmed = 0;
+    this.maxConfirmedPercentage = 0;
+
     this.state = {
       lat: 36,
       lng: 0,
@@ -64,7 +66,9 @@ export default class Maps extends Component {
   getColor = (countryCode) => {
     if (this.todaysData[countryCode]) {
       const { confirmed } = this.todaysData[countryCode];
-      const rgb = 255 - Math.round((confirmed / this.maxConfirmed) * 255);
+      const { populationData } = this.props;
+      const confirmedPercentage = confirmed / populationData[countryCode];
+      const rgb = 255 - Math.round((confirmedPercentage / this.maxConfirmedPercentage) * 255);
       return `rgb(${rgb},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
@@ -84,12 +88,14 @@ export default class Maps extends Component {
       lat, lng, zoom, zoomSnap,
     } = this.state;
 
-    const { curDate, countryData } = this.props;
+    const { curDate, countryData, populationData } = this.props;
 
     if (Object.keys(this.todaysData).length === 0 && countryData && curDate) {
       countryData[curDate].forEach((country) => {
         this.todaysData[country.countryCode] = country;
         this.maxConfirmed = Math.max(this.maxConfirmed, country.confirmed);
+        this.maxConfirmedPercentage = Math.max(this.maxConfirmedPercentage,
+          country.confirmed / populationData[country.countryCode]);
       });
     }
 
@@ -107,7 +113,6 @@ export default class Maps extends Component {
         >
           <GeoJSON
             data={geoJSON}
-            // onEachFeature: console.log(features)
             style={this.styleMap}
           />
           <TileLayer
@@ -123,9 +128,11 @@ export default class Maps extends Component {
 Maps.defaultProps = {
   countryData: {},
   curDate: '',
+  populationData: {},
 };
 
 Maps.propTypes = {
   countryData: PropTypes.objectOf(PropTypes.array),
   curDate: PropTypes.string,
+  populationData: PropTypes.objectOf(PropTypes.number),
 };

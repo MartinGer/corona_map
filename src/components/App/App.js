@@ -8,36 +8,42 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.data_loader = new DataLoader();
+    this.dataLoader = new DataLoader();
 
     this.state = {
       fullData: null,
       countryData: null,
       curDate: null,
+      populationData: null,
     };
   }
 
   async componentDidMount() {
-    const fullData = await this.data_loader.fetchFullCoronaData();
-    const timeseriesData = await this.data_loader.fetchCoronaData();
+    const fullData = await this.dataLoader.fetchFullCoronaData();
+    const timeseriesData = await this.dataLoader.fetchCoronaData();
     const countryData = timeseriesData[0];
     const curDate = timeseriesData[1];
+
+    const populationData = await this.dataLoader.fetchPopulationData();
 
     this.setState({
       fullData,
       countryData,
       curDate,
+      populationData,
     });
   }
 
   render() {
-    const { curDate, fullData, countryData } = this.state;
+    const {
+      curDate, fullData, countryData, populationData,
+    } = this.state;
 
     return (
       <div className="App">
         <div className="Components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
-          <Maps curDate={curDate} countryData={countryData} />
+          <Maps curDate={curDate} countryData={countryData} populationData={populationData} />
         </div>
       </div>
     );

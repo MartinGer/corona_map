@@ -7,6 +7,8 @@ const PATH_BRIEF = '/brief';
 const COUNTRY_QUERY = `${PATH_BASE}${PATH_TIMESERIES}?${PATH_SEARCH}`;
 const FULL_QUERY = `${PATH_BASE}${PATH_BRIEF}`; // https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu/brief
 const SUM_UP_PARAM = '&onlyCountries=false';
+const POPULATION_QUERY = 'https://restcountries.eu/rest/v2/all';
+
 const countryList = require('country-list');
 
 const countries = countryList.getCodes();
@@ -19,6 +21,8 @@ export default class DataLoader {
     fullData = {};
 
     curDate = null;
+
+    populationData = {};
 
     fetchFullCoronaData = async () => {
       const response = await axios.get(FULL_QUERY);
@@ -70,5 +74,18 @@ export default class DataLoader {
         this.countryData[timestamp] = [];
       }
       this.countryData[timestamp].push(countryInfo);
+    }
+
+    fetchPopulationData = async () => {
+      await axios.get(POPULATION_QUERY)
+        .then((response) => this.setPopulationData(response.data))
+        .catch((e) => e);
+      return this.populationData;
+    }
+
+    setPopulationData = (result) => {
+      result.forEach((country) => {
+        this.populationData[country.alpha2Code] = country.population;
+      });
     }
 }
