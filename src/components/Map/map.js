@@ -14,7 +14,8 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 export default class Maps extends Component {
   constructor(props) {
     super(props);
-
+    this.todaysData = {};
+    this.maxConfirmed = 0;
     this.state = {
       lat: 36,
       lng: 0,
@@ -60,16 +61,23 @@ export default class Maps extends Component {
   //   return <GeoJSON data={geoJSON} />;
   // }
 
-  getColor = (d) => {
-    return d > 1000 ? '#800026'
-      : d > 500 ? '#BD0026'
-        : d > 200 ? '#E31A1C'
-          : d > 100 ? '#FC4E2A'
-            : d > 50 ? '#FD8D3C'
-              : d > 20 ? '#FEB24C'
-                : d > 10 ? '#FED976'
-                  : '#FFEDA0';
-  }
+  getColor = (countryCode) => {
+    if (this.todaysData[countryCode]) {
+      const { confirmed } = this.todaysData[countryCode];
+      const rgb = 255 - Math.round((confirmed / this.maxConfirmed) * 255);
+      return `rgb(${rgb},${rgb},${rgb})`;
+    }
+    return 'rgb(255,255,255)';
+  };
+
+  styleMap = (feature) => ({
+    fillColor: this.getColor(feature.properties.iso_a2),
+    weight: 2,
+    opacity: 1,
+    color: 'white',
+    dashArray: '3',
+    fillOpacity: 0.7,
+  });
 
   render() {
     const {
@@ -77,6 +85,13 @@ export default class Maps extends Component {
     } = this.state;
 
     const { curDate, countryData } = this.props;
+
+    if (Object.keys(this.todaysData).length === 0 && countryData && curDate) {
+      countryData[curDate].forEach((country) => {
+        this.todaysData[country.countryCode] = country;
+        this.maxConfirmed = Math.max(this.maxConfirmed, country.confirmed);
+      });
+    }
 
     return (
       <div className="Map">
@@ -92,14 +107,8 @@ export default class Maps extends Component {
         >
           <GeoJSON
             data={geoJSON}
-            style={{
-              fillColor: this.getColor(500),
-              weight: 2,
-              opacity: 1,
-              color: 'white',
-              dashArray: '3',
-              fillOpacity: 0.7,
-            }}
+            // onEachFeature: console.log(features)
+            style={this.styleMap}
           />
           <TileLayer
             attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -111,16 +120,12 @@ export default class Maps extends Component {
   }
 }
 
-// Maps.defaultProps = {
-//   geoData: {},
-// };
+Maps.defaultProps = {
+  countryData: {},
+  curDate: '',
+};
 
-// Maps.propTypes = {
-//   placeholderProp(props, geoData, Maps) {
-//     try {
-//       JSON.parse(props[geoData]);
-//     } catch (e) {
-//       return new Error(`Invalid prop \`${geoData}\` supplied to \`${Maps}\`. Validation failed.`);
-//     }
-//   },
-// };
+Maps.propTypes = {
+  countryData: PropTypes.objectOf(PropTypes.array),
+  curDate: PropTypes.string,
+};
