@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import './map.css';
-import {
-  Map, TileLayer, Marker, Popup, GeoJSON,
-} from 'react-leaflet';
+import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 
 import PropTypes from 'prop-types';
 import geoJSON from '../../data/countries.geo.json';
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
-// const style = ({ properties }) => properties.style;
 
 export default class Maps extends Component {
   constructor(props) {
@@ -26,49 +22,13 @@ export default class Maps extends Component {
     };
   }
 
-  // zoomToFeature = ({ target }) => {
-  //   target._map.fitBounds(target.getBounds().pad(0.05));
-  // }
-
-  // highlightFeature = ({ target }) => {
-  //   target.setStyle({
-  //     weight: 5,
-  //     color: '#666',
-  //     dashArray: '',
-  //     fillOpacity: 0.7,
-  //   });
-
-  //   if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-  //     target.bringToFront();
-  //   }
-
-  //   this.info.update(target.feature.properties);
-  // };
-
-  // resetHighlight = ({ target }) => {
-  //   target.setStyle(style(target.feature));
-  //   this.info.update();
-  // };
-
-  // onEachFeature = (feature, layer) => {
-  //   layer.on({
-  //     mouseover: this.highlightFeature,
-  //     mouseout: this.resetHighlight,
-  //     click: this.zoomToFeature,
-  //   });
-  // };
-
-  // fetch = () => {
-  //   console.log(geoJSON);
-  //   return <GeoJSON data={geoJSON} />;
-  // }
-
   getColor = (countryCode) => {
     if (this.todaysData[countryCode]) {
       const { confirmed } = this.todaysData[countryCode];
       const { populationData } = this.props;
       const confirmedPercentage = confirmed / populationData[countryCode];
-      const rgb = 255 - Math.round((confirmedPercentage / this.maxConfirmedPercentage) * 255);
+      const rgb = (255
+        - Math.round((confirmedPercentage / this.maxConfirmedPercentage) * 255)) - 40;
       return `rgb(${rgb},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
@@ -78,7 +38,7 @@ export default class Maps extends Component {
     fillColor: this.getColor(feature.properties.iso_a2),
     weight: 2,
     opacity: 1,
-    color: 'white',
+    color: 'grey',
     dashArray: '3',
     fillOpacity: 0.7,
   });

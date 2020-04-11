@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import CountryList from '../CountryList/countryList';
-import Maps from '../Map/map';
+import Map from '../Map/map';
 import DataLoader from '../../utils/DataLoader';
 
 export default class App extends Component {
@@ -43,9 +43,14 @@ export default class App extends Component {
       <div className="App">
         <div className="Components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
-          <Maps curDate={curDate} countryData={countryData} populationData={populationData} />
+          <Map curDate={curDate} countryData={countryData} populationData={populationData} />
         </div>
       </div>
     );
   }
 }
+
+export {
+  CountryList,
+  Map,
+};
