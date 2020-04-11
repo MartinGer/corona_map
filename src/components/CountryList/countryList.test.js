@@ -1,9 +1,9 @@
-// import React from 'react';
-// import { render } from '@testing-library/react';
-// import App from './state';
+import React from 'react';
+import { shallow } from 'enzyme';
+import CountryList from './countryList';
 
-// test('renders learn react link', () => {
-//   const { getByText } = render(<App />);
-//   const linkElement = getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+describe('test CountryList component', () => {
+  it('renders without crashing', () => {
+    shallow(<CountryList />);
+  });
+});
