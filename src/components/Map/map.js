@@ -3,7 +3,6 @@ import './map.css';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 
 import PropTypes from 'prop-types';
-import { Stage, Layer, Rect } from 'react-konva';
 import geoJSON from '../../data/countries.geo.json';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -44,6 +43,18 @@ export default class Maps extends Component {
     position: 'relative',
   });
 
+  styleBar = () => ({
+    border: 'solid',
+    borderWidth: 'thin',
+    backgroundImage: 'linear-gradient(to right, rgb(200,255,255), rgb(255,255,255))',
+    width: '30%',
+    height: '2%',
+    position: 'absolute',
+    bottom: '5%',
+    right: '5%',
+    zIndex: '500',
+  });
+
   render() {
     const {
       lat, lng, zoom, zoomSnap,
@@ -81,8 +92,9 @@ export default class Maps extends Component {
             style={this.styleMap}
           />
           <GradientBar
-            width="20vh"
-            height="100vh"
+            rgbStart={255}
+            rgbEnd={0}
+            max={1000}
           />
         </Map>
       </div>
@@ -102,63 +114,50 @@ Maps.propTypes = {
   populationData: PropTypes.objectOf(PropTypes.number),
 };
 
-const GradientBar = ({ width, height }) => (
-  // <Stage width={width} height={height}>
-  //   <Layer>
-  //     <Rect
-  //       width={100}
-  //       height={height}
-  //       fill="red"
-  //       shadowBlur={5}
-  //     />
-  //   </Layer>
-  // </Stage>
-  <div
-    className="gradientBar"
-    style={{
-      color: 'red',
-      border: 'dotted',
-      borderColor: 'green',
-      backgroundColor: 'yellow',
-      width: '20%',
-      position: 'absolute',
-      bottom: '7%',
-      right: '7%',
-      display: 'block',
-      zIndex: '500',
-    }}
-  >
-    <p>Test Text</p>
-  </div>
-
-  // <div id="container"></div>
-  // var width = window.innerWidth;
-  // var height = window.innerHeight;
-  // stage = new Konva.Stage({
-  //   container: 'container',
-  //   width: width,
-  //   height: height
-  // });
-
-  // var layer = new Konva.Layer();
-
-  // var rect1 = new Konva.Rect({
-  //   x: 20,
-  //   y: 20,
-  //   width: 100,
-  //   h eight: 50,
-  //   fill: 'green',
-  //   stroke: 'black',
-  //   strokeWidth: 4
-  // });
-  // // add the shape to the layer
-  // layer.add(rect1);
-  // stage.add(layer);
-  // // <View
-  // //   style={{
-  // //     height: 1,
-  // //     backgroundColor: 'rgba(255, 255, 255 ,0.3)',
-  // //     alignSelf: 'stretch',
-  // //   }}
-  // // />
-);
+function GradientBar({ rgbStart, rgbEnd, max }) {
+  return (
+    <div
+      className="legend"
+      style={
+      {
+        border: 'solid',
+        borderWidth: 'thin',
+        backgroundImage: `linear-gradient(to right, rgb(${rgbStart},${rgbStart},${rgbStart}), rgb(${rgbEnd},${rgbEnd},${rgbEnd}))`,
+        width: '30%',
+        height: '2%',
+        position: 'absolute',
+        bottom: '5%',
+        right: '5%',
+        zIndex: '500',
+      }
+    }
+    >
+      <div
+        className="gradientBar"
+      />
+      <p style={{
+        top: '100%',
+        position: 'absolute',
+      }}
+      >
+        0
+      </p>
+      <p style={{
+        top: '100%',
+        left: '25%',
+        position: 'absolute',
+      }}
+      >
+        Percentage of Confirmed Cases
+      </p>
+      <p style={{
+        top: '100%',
+        left: '90%',
+        position: 'absolute',
+      }}
+      >
+        { max }
+      </p>
+    </div>
+  );
+}
