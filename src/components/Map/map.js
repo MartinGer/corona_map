@@ -41,6 +41,7 @@ export default class Maps extends Component {
     color: 'grey',
     dashArray: '3',
     fillOpacity: 0.7,
+    position: 'relative',
   });
 
   render() {
@@ -60,11 +61,7 @@ export default class Maps extends Component {
     }
 
     return (
-      <div className="Map">
-        <GradientBar
-          width={"20vh"}
-          height={"100vh"}
-        />
+      <div className="MapContainer">
         <Map
           center={[lat, lng]}
           zoom={zoom}
@@ -75,13 +72,17 @@ export default class Maps extends Component {
           }}
           worldCopyJump
         >
+          <TileLayer
+            attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
           <GeoJSON
             data={geoJSON}
             style={this.styleMap}
           />
-          <TileLayer
-            attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          <GradientBar
+            width="20vh"
+            height="100vh"
           />
         </Map>
       </div>
@@ -102,16 +103,33 @@ Maps.propTypes = {
 };
 
 const GradientBar = ({ width, height }) => (
-  <Stage width={width} height={height}>
-    <Layer>
-      <Rect
-        width={100}
-        height={height}
-        fill="red"
-        shadowBlur={5}
-      />
-    </Layer>
-  </Stage>
+  // <Stage width={width} height={height}>
+  //   <Layer>
+  //     <Rect
+  //       width={100}
+  //       height={height}
+  //       fill="red"
+  //       shadowBlur={5}
+  //     />
+  //   </Layer>
+  // </Stage>
+  <div
+    className="gradientBar"
+    style={{
+      color: 'red',
+      border: 'dotted',
+      borderColor: 'green',
+      backgroundColor: 'yellow',
+      width: '20%',
+      position: 'absolute',
+      bottom: '7%',
+      right: '7%',
+      display: 'block',
+      zIndex: '500',
+    }}
+  >
+    <p>Test Text</p>
+  </div>
 
   // <div id="container"></div>
   // var width = window.innerWidth;
