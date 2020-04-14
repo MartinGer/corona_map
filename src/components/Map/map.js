@@ -10,7 +10,9 @@ export default class Maps extends Component {
   constructor(props) {
     super(props);
     this.todaysData = {};
+    this.maxConfirmed = 0;
     this.maxConfirmedFraction = 0;
+    this.fractionData = false;
 
     this.state = {
       lat: 36,
@@ -20,7 +22,7 @@ export default class Maps extends Component {
     };
   }
 
-  getColor = (countryCode) => {
+  getColorFraction = (countryCode) => {
     if (this.todaysData[countryCode]) {
       const { confirmed } = this.todaysData[countryCode];
       const { populationData } = this.props;
@@ -32,8 +34,19 @@ export default class Maps extends Component {
     return 'rgb(255,255,255)';
   };
 
+  getColorFull = (countryCode) => {
+    if (this.todaysData[countryCode]) {
+      const { confirmed } = this.todaysData[countryCode];
+      const rgb = (255
+        - Math.round((confirmed / this.maxConfirmed) * 255));
+      return `rgb(${rgb},${rgb},${rgb})`;
+    }
+    return 'rgb(255,255,255)';
+  };
+
   styleMap = (feature) => ({
-    fillColor: this.getColor(feature.properties.iso_a2),
+    fillColor: this.fractionData ? this.getColorFraction(feature.properties.iso_a2)
+      : this.getColorFull(feature.properties.iso_a2),
     weight: 2,
     opacity: 1,
     color: 'grey',
@@ -52,6 +65,7 @@ export default class Maps extends Component {
     if (Object.keys(this.todaysData).length === 0 && countryData && curDate) {
       countryData[curDate].forEach((country) => {
         this.todaysData[country.countryCode] = country;
+        this.maxConfirmed = Math.max(this.maxConfirmed, country.confirmed);
         this.maxConfirmedFraction = Math.max(this.maxConfirmedFraction,
           country.confirmed / populationData[country.countryCode]);
       });
@@ -80,7 +94,9 @@ export default class Maps extends Component {
           <GradientBar
             rgbStart={255}
             rgbEnd={0}
-            max={this.maxConfirmedFraction}
+            max={this.fractionData ? (this.maxConfirmedFraction * 100).toFixed(2)
+              : this.maxConfirmed}
+            modeText={this.fractionData ? 'Percentage of Confirmed Cases' : 'Number of Confirmed Cases'}
           />
         </Map>
       </div>
@@ -100,7 +116,9 @@ Maps.propTypes = {
   populationData: PropTypes.objectOf(PropTypes.number),
 };
 
-function GradientBar({ rgbStart, rgbEnd, max }) {
+function GradientBar({
+  rgbStart, rgbEnd, max, modeText,
+}) {
   return (
     <div
       className="legend"
@@ -135,7 +153,7 @@ function GradientBar({ rgbStart, rgbEnd, max }) {
         position: 'absolute',
       }}
       >
-        Percentage of Confirmed Cases
+        { modeText }
       </p>
       <p style={{
         top: '110%',
@@ -143,7 +161,7 @@ function GradientBar({ rgbStart, rgbEnd, max }) {
         position: 'absolute',
       }}
       >
-        { (max * 100).toFixed(2) }
+        { max }
       </p>
     </div>
   );
@@ -153,10 +171,12 @@ GradientBar.defaultProps = {
   rgbStart: 0,
   rgbEnd: 0,
   max: 0,
+  modeText: '',
 };
 
 GradientBar.propTypes = {
   rgbStart: PropTypes.number,
   rgbEnd: PropTypes.number,
   max: PropTypes.number,
+  modeText: PropTypes.string,
 };
