@@ -12,13 +12,13 @@ export default class Maps extends Component {
     this.todaysData = {};
     this.maxConfirmed = 0;
     this.maxConfirmedFraction = 0;
-    this.fractionData = false;
 
     this.state = {
       lat: 36,
       lng: 0,
       zoom: 3,
       zoomSnap: 0.88,
+      fractionMode: true,
     };
   }
 
@@ -45,7 +45,7 @@ export default class Maps extends Component {
   };
 
   styleMap = (feature) => ({
-    fillColor: this.fractionData ? this.getColorFraction(feature.properties.iso_a2)
+    fillColor: this.state.fractionMode ? this.getColorFraction(feature.properties.iso_a2)
       : this.getColorFull(feature.properties.iso_a2),
     weight: 2,
     opacity: 1,
@@ -55,9 +55,19 @@ export default class Maps extends Component {
     position: 'relative',
   });
 
+  switchMode = () => {
+    const { fractionMode } = this.state;
+    if (fractionMode) {
+      this.setState({ fractionMode: false });
+    } else {
+      this.setState({ fractionMode: true });
+
+    }
+  }
+
   render() {
     const {
-      lat, lng, zoom, zoomSnap,
+      lat, lng, zoom, zoomSnap, fractionMode
     } = this.state;
 
     const { curDate, countryData, populationData } = this.props;
@@ -94,9 +104,10 @@ export default class Maps extends Component {
           <GradientBar
             rgbStart={255}
             rgbEnd={0}
-            max={this.fractionData ? (this.maxConfirmedFraction * 100).toFixed(2)
+            max={fractionMode ? parseInt((this.maxConfirmedFraction * 100).toFixed(2), 10)
               : this.maxConfirmed}
-            modeText={this.fractionData ? 'Percentage of Confirmed Cases' : 'Number of Confirmed Cases'}
+            modeText={fractionMode ? 'Percentage of Confirmed Cases' : 'Number of Confirmed Cases'}
+            onClick={this.switchMode}
           />
         </Map>
       </div>
@@ -117,7 +128,7 @@ Maps.propTypes = {
 };
 
 function GradientBar({
-  rgbStart, rgbEnd, max, modeText,
+  rgbStart, rgbEnd, max, modeText, onClick,
 }) {
   return (
     <div
@@ -127,11 +138,11 @@ function GradientBar({
         border: 'solid',
         borderWidth: 'thin',
         backgroundImage: `linear-gradient(to right, rgb(${rgbStart},${rgbStart},${rgbStart}), rgb(${rgbEnd},${rgbEnd},${rgbEnd}))`,
-        width: '30%',
-        height: '2%',
+        width: '25%',
+        height: '1.5%',
         position: 'absolute',
-        bottom: '5%',
-        right: '5%',
+        bottom: '4%',
+        right: '4%',
         zIndex: '500',
       }
     }
@@ -163,6 +174,13 @@ function GradientBar({
       >
         { max }
       </p>
+      <button
+        onClick={onClick}
+        type="button"
+        style={{ top: '-200px', right: '50%' }}
+      >
+        Switch
+      </button>
     </div>
   );
 }
@@ -172,6 +190,7 @@ GradientBar.defaultProps = {
   rgbEnd: 0,
   max: 0,
   modeText: '',
+  onClick: null,
 };
 
 GradientBar.propTypes = {
@@ -179,4 +198,5 @@ GradientBar.propTypes = {
   rgbEnd: PropTypes.number,
   max: PropTypes.number,
   modeText: PropTypes.string,
+  onClick: PropTypes.func,
 };
