@@ -10,8 +10,7 @@ export default class Maps extends Component {
   constructor(props) {
     super(props);
     this.todaysData = {};
-    this.maxConfirmed = 0;
-    this.maxConfirmedPercentage = 0;
+    this.maxConfirmedFraction = 0;
 
     this.state = {
       lat: 36,
@@ -25,9 +24,9 @@ export default class Maps extends Component {
     if (this.todaysData[countryCode]) {
       const { confirmed } = this.todaysData[countryCode];
       const { populationData } = this.props;
-      const confirmedPercentage = confirmed / populationData[countryCode];
+      const confirmedFraction = confirmed / populationData[countryCode];
       const rgb = (255
-        - Math.round((confirmedPercentage / this.maxConfirmedPercentage) * 255)) - 40;
+        - Math.round((confirmedFraction / this.maxConfirmedFraction) * 255));
       return `rgb(${rgb},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
@@ -43,18 +42,6 @@ export default class Maps extends Component {
     position: 'relative',
   });
 
-  styleBar = () => ({
-    border: 'solid',
-    borderWidth: 'thin',
-    backgroundImage: 'linear-gradient(to right, rgb(200,255,255), rgb(255,255,255))',
-    width: '30%',
-    height: '2%',
-    position: 'absolute',
-    bottom: '5%',
-    right: '5%',
-    zIndex: '500',
-  });
-
   render() {
     const {
       lat, lng, zoom, zoomSnap,
@@ -65,8 +52,7 @@ export default class Maps extends Component {
     if (Object.keys(this.todaysData).length === 0 && countryData && curDate) {
       countryData[curDate].forEach((country) => {
         this.todaysData[country.countryCode] = country;
-        this.maxConfirmed = Math.max(this.maxConfirmed, country.confirmed);
-        this.maxConfirmedPercentage = Math.max(this.maxConfirmedPercentage,
+        this.maxConfirmedFraction = Math.max(this.maxConfirmedFraction,
           country.confirmed / populationData[country.countryCode]);
       });
     }
@@ -94,7 +80,7 @@ export default class Maps extends Component {
           <GradientBar
             rgbStart={255}
             rgbEnd={0}
-            max={1000}
+            max={this.maxConfirmedFraction}
           />
         </Map>
       </div>
@@ -136,28 +122,41 @@ function GradientBar({ rgbStart, rgbEnd, max }) {
         className="gradientBar"
       />
       <p style={{
-        top: '100%',
+        top: '110%',
         position: 'absolute',
       }}
       >
         0
       </p>
       <p style={{
-        top: '100%',
-        left: '25%',
+        top: '110%',
+        left: '30%',
+        right: '30%',
         position: 'absolute',
       }}
       >
         Percentage of Confirmed Cases
       </p>
       <p style={{
-        top: '100%',
-        left: '90%',
+        top: '110%',
+        right: '0%',
         position: 'absolute',
       }}
       >
-        { max }
+        { (max * 100).toFixed(2) }
       </p>
     </div>
   );
 }
+
+GradientBar.defaultProps = {
+  rgbStart: 0,
+  rgbEnd: 0,
+  max: 0,
+};
+
+GradientBar.propTypes = {
+  rgbStart: PropTypes.number,
+  rgbEnd: PropTypes.number,
+  max: PropTypes.number,
+};
