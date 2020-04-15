@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './map.css';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 import PropTypes from 'prop-types';
 import geoJSON from '../../data/countries.geo.json';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 export default class Maps extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ export default class Maps extends Component {
       zoom: 3,
       zoomSnap: 0.88,
       fractionMode: true,
+      status: 'Percentage of Population',
     };
   }
 
@@ -55,19 +58,20 @@ export default class Maps extends Component {
     position: 'relative',
   });
 
-  switchMode = () => {
-    const { fractionMode } = this.state;
-    if (fractionMode) {
+  changeStatus = () => {
+    const { fractionMode, status } = this.state;
+    if (status === 'Percentage of Population' && fractionMode === true) {
+      this.setState({ status: 'Confirmed Cases' });
       this.setState({ fractionMode: false });
-    } else {
+    } else if (status === 'Confirmed Cases' && fractionMode === false) {
+      this.setState({ status: 'Percentage of Population' });
       this.setState({ fractionMode: true });
-
     }
   }
 
   render() {
     const {
-      lat, lng, zoom, zoomSnap, fractionMode
+      lat, lng, zoom, zoomSnap, fractionMode, status,
     } = this.state;
 
     const { curDate, countryData, populationData } = this.props;
@@ -104,10 +108,10 @@ export default class Maps extends Component {
           <GradientBar
             rgbStart={255}
             rgbEnd={0}
-            max={fractionMode ? parseInt((this.maxConfirmedFraction * 100).toFixed(2), 10)
+            max={fractionMode ? (this.maxConfirmedFraction * 100).toFixed(2)
               : this.maxConfirmed}
-            modeText={fractionMode ? 'Percentage of Confirmed Cases' : 'Number of Confirmed Cases'}
-            onClick={this.switchMode}
+            changeStatus={this.changeStatus}
+            status={status}
           />
         </Map>
       </div>
@@ -128,7 +132,7 @@ Maps.propTypes = {
 };
 
 function GradientBar({
-  rgbStart, rgbEnd, max, modeText, onClick,
+  rgbStart, rgbEnd, max, changeStatus, status,
 }) {
   return (
     <div
@@ -144,6 +148,9 @@ function GradientBar({
         bottom: '4%',
         right: '4%',
         zIndex: '500',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }
     }
     >
@@ -152,19 +159,11 @@ function GradientBar({
       />
       <p style={{
         top: '110%',
+        left: '0%',
         position: 'absolute',
       }}
       >
         0
-      </p>
-      <p style={{
-        top: '110%',
-        left: '30%',
-        right: '30%',
-        position: 'absolute',
-      }}
-      >
-        { modeText }
       </p>
       <p style={{
         top: '110%',
@@ -174,13 +173,25 @@ function GradientBar({
       >
         { max }
       </p>
-      <button
-        onClick={onClick}
-        type="button"
-        style={{ top: '-200px', right: '50%' }}
+      <DropdownButton
+        id="dropdown-item-button"
+        title={status}
+        className="format"
+        size="sm"
+        variant="secondary"
+        style={{
+          top: '110%',
+          position: 'absolute',
+          height: '22px',
+          padding: '2px 5px',
+          fontSize: '12px',
+          lineHeight: '1.5', /* If Placeholder of the input is moved up, rem/modify this. */
+          borderRadius: '3px',
+        }}
       >
-        Switch
-      </button>
+        <Dropdown.Item as="button"><div onClick={changeStatus}> Percentage of Population </div></Dropdown.Item>
+        <Dropdown.Item as="button"><div onClick={changeStatus}> Confirmed Cases </div></Dropdown.Item>
+      </DropdownButton>
     </div>
   );
 }
@@ -189,14 +200,17 @@ GradientBar.defaultProps = {
   rgbStart: 0,
   rgbEnd: 0,
   max: 0,
-  modeText: '',
-  onClick: null,
+  changeStatus: null,
+  status: '',
 };
 
 GradientBar.propTypes = {
   rgbStart: PropTypes.number,
   rgbEnd: PropTypes.number,
-  max: PropTypes.number,
-  modeText: PropTypes.string,
-  onClick: PropTypes.func,
+  max: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  changeStatus: PropTypes.func,
+  status: PropTypes.string,
 };
