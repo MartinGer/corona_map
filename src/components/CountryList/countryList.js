@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import './countryList.css';
-
 import PropTypes from 'prop-types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import './countryList.css';
+import compareValues from '../../utils/UtilFunctions';
 
 export default class CountryList extends Component {
   constructor(props) {
@@ -28,8 +29,11 @@ export default class CountryList extends Component {
       );
     }
     if (countryData) {
+      const curData = countryData[curDate];
+      curData.sort(this.compareValues('deaths', 'desc'));
+      console.log(curData);
       seperateData = (
-        countryData[curDate].map((countryInfo) => (
+        curData.map((countryInfo) => (
           <React.Fragment key={countryInfo.countryCode}>
             <tr>
               <th scope="row">{countryInfo.country}</th>
