@@ -1,4 +1,4 @@
-class CountryInfo {
+export default class CountryInfo {
   constructor(country, countryCode, location, confirmed, deaths, recovered) {
     this.country = country;
     this.countryCode = countryCode;
@@ -8,5 +8,3 @@ class CountryInfo {
     this.recovered = recovered;
   }
 }
-
-export default CountryInfo;

@@ -10,10 +10,9 @@ const SUM_UP_PARAM = '&onlyCountries=false';
 const POPULATION_QUERY = 'https://restcountries.eu/rest/v2/all';
 
 const countryList = require('country-list');
+const axios = require('axios').default;
 
 const countries = countryList.getCodes();
-
-const axios = require('axios').default;
 
 export default class DataLoader {
     countryData = {};

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './map.css';
+
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-
-import PropTypes from 'prop-types';
-import geoJSON from '../../data/countries.geo.json';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import PropTypes from 'prop-types';
 
+import './map.css';
+import geoJSON from '../../data/countries.geo.json';
 
 export default class Maps extends Component {
   constructor(props) {
