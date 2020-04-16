@@ -58,14 +58,19 @@ export default class Maps extends Component {
     position: 'relative',
   });
 
-  changeStatus = () => {
+  changeStatusToFraction = () => {
+    const { fractionMode, status } = this.state;
+    if (status === 'Confirmed Cases' && fractionMode === false) {
+      this.setState({ status: 'Percentage of Population' });
+      this.setState({ fractionMode: true });
+    }
+  }
+
+  changeStatusToConfirmedCases = () => {
     const { fractionMode, status } = this.state;
     if (status === 'Percentage of Population' && fractionMode === true) {
       this.setState({ status: 'Confirmed Cases' });
       this.setState({ fractionMode: false });
-    } else if (status === 'Confirmed Cases' && fractionMode === false) {
-      this.setState({ status: 'Percentage of Population' });
-      this.setState({ fractionMode: true });
     }
   }
 
@@ -110,7 +115,8 @@ export default class Maps extends Component {
             rgbEnd={0}
             max={fractionMode ? (this.maxConfirmedFraction * 100).toFixed(2)
               : this.maxConfirmed}
-            changeStatus={this.changeStatus}
+            changeStatusToFraction={this.changeStatusToFraction}
+            changeStatusToConfirmedCases={this.changeStatusToConfirmedCases}
             status={status}
           />
         </Map>
@@ -132,7 +138,7 @@ Maps.propTypes = {
 };
 
 function GradientBar({
-  rgbStart, rgbEnd, max, changeStatus, status,
+  rgbStart, rgbEnd, max, changeStatusToFraction, changeStatusToConfirmedCases, status,
 }) {
   return (
     <div
@@ -182,15 +188,10 @@ function GradientBar({
         style={{
           top: '110%',
           position: 'absolute',
-          height: '22px',
-          padding: '2px 5px',
-          fontSize: '12px',
-          lineHeight: '1.5', /* If Placeholder of the input is moved up, rem/modify this. */
-          borderRadius: '3px',
         }}
       >
-        <Dropdown.Item as="button"><div onClick={changeStatus}> Percentage of Population </div></Dropdown.Item>
-        <Dropdown.Item as="button"><div onClick={changeStatus}> Confirmed Cases </div></Dropdown.Item>
+        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Percentage of Population </div></Dropdown.Item>
+        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToConfirmedCases} onKeyDown={changeStatusToConfirmedCases}> Confirmed Cases </div></Dropdown.Item>
       </DropdownButton>
     </div>
   );
@@ -200,7 +201,8 @@ GradientBar.defaultProps = {
   rgbStart: 0,
   rgbEnd: 0,
   max: 0,
-  changeStatus: null,
+  changeStatusToFraction: null,
+  changeStatusToConfirmedCases: null,
   status: '',
 };
 
@@ -211,6 +213,7 @@ GradientBar.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  changeStatus: PropTypes.func,
+  changeStatusToFraction: PropTypes.func,
+  changeStatusToConfirmedCases: PropTypes.func,
   status: PropTypes.string,
 };
