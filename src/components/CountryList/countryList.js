@@ -2,48 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 import './countryList.css';
 import compareValues from '../../utils/UtilFunctions';
 
+library.add(faCaretDown, faCaretUp);
+
 const sortTypes = {
   country: {
     asc: {
-      class: 'sort-up',
+      class: 'caret-up',
       fn: compareValues('country', 'asc'),
     },
     desc: {
-      class: 'sort-down',
+      class: 'caret-down',
       fn: compareValues('country', 'desc'),
     },
   },
   confirmed: {
     asc: {
-      class: 'sort-up',
+      class: 'caret-up',
       fn: compareValues('confirmed', 'asc'),
     },
     desc: {
-      class: 'sort-down',
+      class: 'caret-down',
       fn: compareValues('confirmed', 'desc'),
     },
   },
   deaths: {
     asc: {
-      class: 'sort-up',
+      class: 'caret-up',
       fn: compareValues('deaths', 'asc'),
     },
     desc: {
-      class: 'sort-down',
+      class: 'caret-down',
       fn: compareValues('deaths', 'desc'),
     },
   },
   recovered: {
     asc: {
-      class: 'sort-up',
+      class: 'caret-up',
       fn: compareValues('recovered', 'asc'),
     },
     desc: {
-      class: 'sort-down',
+      class: 'caret-down',
       fn: compareValues('recovered', 'desc'),
     },
   },
@@ -122,25 +127,25 @@ export default class CountryList extends Component {
               <th scope="col" className="header">
                 State
                 <button type="button" id="countryButton" onClick={(e) => this.sort(e.target.id)}>
-                  <i className={`fas fa-${sortTypes[sortBy][sortHow].class}`} />
+                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
               <th scope="col" className="header">
                 Infected
                 <button type="button" id="confirmedButton" onClick={(e) => this.sort(e.target.id)}>
-                  <i className={`fas fa-${sortTypes[sortBy][sortHow].class}`} />
+                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
               <th scope="col" className="header">
                 Deaths
-                <button type="button" id="deathsButton" onClick={(e) => this.sort(e.target.id)}>
-                  <i className={`fas fa-${sortTypes[sortBy][sortHow].class}`} />
+                <button type="button" id="deathsButton" style={{}} onClick={(e) => this.sort(e.target.id)}>
+                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
               <th scope="col" className="header">
                 Recovered
                 <button type="button" id="recoveredButton" onClick={(e) => this.sort(e.target.id)}>
-                  <i className={`fas fa-${sortTypes[sortBy][sortHow].class}`} />
+                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
             </tr>
