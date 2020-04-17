@@ -138,7 +138,7 @@ export default class CountryList extends Component {
               </th>
               <th scope="col" className="header">
                 Deaths
-                <button type="button" id="deathsButton" style={{}} onClick={(e) => this.sort(e.target.id)}>
+                <button type="button" id="deathsButton" onClick={(e) => this.sort(e.target.id)}>
                   <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
