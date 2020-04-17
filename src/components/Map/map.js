@@ -19,7 +19,7 @@ export default class Maps extends Component {
       lat: 36,
       lng: 0,
       zoom: 3,
-      zoomSnap: 0.88,
+      zoomSnap: 0.90,
       fractionMode: true,
       status: 'Percentage of Population',
     };
