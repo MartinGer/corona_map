@@ -76,6 +76,40 @@ export default class Maps extends Component {
     }
   }
 
+  highlightFeature = ({ target }) => {
+    target.setStyle({
+      weight: 5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7,
+    });
+
+    // if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    //   target.bringToFront();
+    // }
+
+    // this.info.update(target.feature.properties);
+  };
+
+  resetHighlight = ({ target }) => {
+    target.setStyle({
+      weight: 2,
+      opacity: 1,
+      color: 'grey',
+      dashArray: '3',
+      fillOpacity: 0.7,
+    });
+    // this.info.update();
+  };
+
+  onEachFeature = (feature, layer) => {
+    layer.on({
+      mouseover: this.highlightFeature,
+      mouseout: this.resetHighlight,
+      // click: zoomToFeature,
+    });
+  };
+
   render() {
     const {
       lat, lng, zoom, zoomSnap, fractionMode, status,
@@ -112,6 +146,7 @@ export default class Maps extends Component {
           <GeoJSON
             data={geoJSON}
             style={this.styleMap}
+            onEachFeature={this.onEachFeature}
           />
           <GradientBar
             rgbStart={255}
