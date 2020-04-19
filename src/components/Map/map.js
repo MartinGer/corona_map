@@ -12,8 +12,8 @@ export default class Maps extends Component {
   constructor(props) {
     super(props);
     this.todaysData = {};
-    this.maxConfirmed = 0;
-    this.maxConfirmedFraction = 0;
+    this.maxInfected = 0;
+    this.maxInfectedFraction = 0;
 
     this.state = {
       lat: 36,
@@ -21,17 +21,18 @@ export default class Maps extends Component {
       zoom: 3,
       zoomSnap: 0.90,
       fractionMode: true,
-      status: 'Percentage of Population',
+      status: 'Infected Percentage of Population',
     };
   }
 
   getColorFraction = (countryCode) => {
     if (this.todaysData[countryCode]) {
-      const { confirmed } = this.todaysData[countryCode];
+      const { confirmed, deaths, recovered } = this.todaysData[countryCode];
       const { populationData } = this.props;
-      const confirmedFraction = confirmed / populationData[countryCode];
+      const currentInfected = confirmed - deaths - recovered;
+      const infectedFraction = currentInfected / populationData[countryCode];
       const rgb = (255
-        - Math.round((confirmedFraction / this.maxConfirmedFraction) * 255));
+        - Math.round((infectedFraction / this.maxInfectedFraction) * 255));
       return `rgb(${rgb},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
@@ -39,9 +40,10 @@ export default class Maps extends Component {
 
   getColorFull = (countryCode) => {
     if (this.todaysData[countryCode]) {
-      const { confirmed } = this.todaysData[countryCode];
+      const { confirmed, deaths, recovered } = this.todaysData[countryCode];
+      const currentInfected = confirmed - deaths - recovered;
       const rgb = (255
-        - Math.round((confirmed / this.maxConfirmed) * 255));
+        - Math.round((currentInfected / this.maxInfected) * 255));
       return `rgb(${rgb},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
@@ -60,16 +62,16 @@ export default class Maps extends Component {
 
   changeStatusToFraction = () => {
     const { fractionMode, status } = this.state;
-    if (status === 'Confirmed Cases' && fractionMode === false) {
-      this.setState({ status: 'Percentage of Population' });
+    if (status === 'Confirmed Infections' && fractionMode === false) {
+      this.setState({ status: 'Infected Percentage of Population' });
       this.setState({ fractionMode: true });
     }
   }
 
-  changeStatusToConfirmedCases = () => {
+  changeStatusToInfectedCases = () => {
     const { fractionMode, status } = this.state;
-    if (status === 'Percentage of Population' && fractionMode === true) {
-      this.setState({ status: 'Confirmed Cases' });
+    if (status === 'Infected Percentage of Population' && fractionMode === true) {
+      this.setState({ status: 'Confirmed Infections' });
       this.setState({ fractionMode: false });
     }
   }
@@ -84,9 +86,10 @@ export default class Maps extends Component {
     if (Object.keys(this.todaysData).length === 0 && countryData && curDate) {
       countryData[curDate].forEach((country) => {
         this.todaysData[country.countryCode] = country;
-        this.maxConfirmed = Math.max(this.maxConfirmed, country.confirmed);
-        this.maxConfirmedFraction = Math.max(this.maxConfirmedFraction,
-          country.confirmed / populationData[country.countryCode]);
+        const currentInfected = country.confirmed - country.deaths - country.recovered;
+        this.maxInfected = Math.max(this.maxInfected, currentInfected);
+        this.maxInfectedFraction = Math.max(this.maxInfectedFraction,
+          currentInfected / populationData[country.countryCode]);
       });
     }
 
@@ -113,10 +116,10 @@ export default class Maps extends Component {
           <GradientBar
             rgbStart={255}
             rgbEnd={0}
-            max={fractionMode ? (this.maxConfirmedFraction * 100).toFixed(2)
-              : this.maxConfirmed}
+            max={fractionMode ? (this.maxInfectedFraction * 100).toFixed(2)
+              : this.maxInfected}
             changeStatusToFraction={this.changeStatusToFraction}
-            changeStatusToConfirmedCases={this.changeStatusToConfirmedCases}
+            changeStatusToInfectedCases={this.changeStatusToInfectedCases}
             status={status}
           />
         </Map>

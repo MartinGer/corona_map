@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 export default function GradientBar({
-  rgbStart, rgbEnd, max, changeStatusToFraction, changeStatusToConfirmedCases, status,
+  rgbStart, rgbEnd, max, changeStatusToFraction, changeStatusToInfectedCases, status,
 }) {
   return (
     <div
@@ -56,8 +56,8 @@ export default function GradientBar({
           position: 'absolute',
         }}
       >
-        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Percentage of Population </div></Dropdown.Item>
-        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToConfirmedCases} onKeyDown={changeStatusToConfirmedCases}> Confirmed Cases </div></Dropdown.Item>
+        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>
+        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToInfectedCases} onKeyDown={changeStatusToInfectedCases}> Confirmed Infections </div></Dropdown.Item>
       </DropdownButton>
     </div>
   );
@@ -68,7 +68,7 @@ GradientBar.defaultProps = {
   rgbEnd: 0,
   max: 0,
   changeStatusToFraction: null,
-  changeStatusToConfirmedCases: null,
+  changeStatusToInfectedCases: null,
   status: '',
 };
 
@@ -80,6 +80,6 @@ GradientBar.propTypes = {
     PropTypes.number,
   ]),
   changeStatusToFraction: PropTypes.func,
-  changeStatusToConfirmedCases: PropTypes.func,
+  changeStatusToInfectedCases: PropTypes.func,
   status: PropTypes.string,
 };
