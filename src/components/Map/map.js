@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
@@ -50,6 +51,7 @@ export default class Maps extends Component {
   };
 
   styleMap = (feature) => ({
+    // eslint-disable-next-line react/destructuring-assignment
     fillColor: this.state.fractionMode ? this.getColorFraction(feature.properties.iso_a2)
       : this.getColorFull(feature.properties.iso_a2),
     weight: 2,
@@ -76,17 +78,12 @@ export default class Maps extends Component {
     }
   }
 
-  highlightFeature = ({ target }) => {
+  highlightCountry = ({ target }) => {
     target.setStyle({
-      weight: 5,
+      weight: 4,
       color: '#666',
-      dashArray: '',
       fillOpacity: 0.7,
     });
-
-    // if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-    //   target.bringToFront();
-    // }
 
     // this.info.update(target.feature.properties);
   };
@@ -102,11 +99,15 @@ export default class Maps extends Component {
     // this.info.update();
   };
 
+  zoomToCountry = ({ target }) => {
+    target._map.fitBounds(target.getBounds().pad(0.05));
+  }
+
   onEachFeature = (feature, layer) => {
     layer.on({
-      mouseover: this.highlightFeature,
+      mouseover: this.highlightCountry,
       mouseout: this.resetHighlight,
-      // click: zoomToFeature,
+      click: this.zoomToCountry,
     });
   };
 
