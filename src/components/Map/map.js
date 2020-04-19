@@ -89,13 +89,7 @@ export default class Maps extends Component {
   };
 
   resetHighlight = ({ target }) => {
-    target.setStyle({
-      weight: 2,
-      opacity: 1,
-      color: 'grey',
-      dashArray: '3',
-      fillOpacity: 0.7,
-    });
+    target.setStyle(this.styleMap(target.feature));
     // this.info.update();
   };
 
