@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CountryList from '../CountryList/countryList';
 import Map from '../Map/map';
-import DataLoader from '../../utils/DataLoader';
+import DataLoader from '../DataLoader';
 
 export default class App extends Component {
   constructor(props) {

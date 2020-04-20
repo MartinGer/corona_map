@@ -1,4 +1,4 @@
-import CountryInfo from './CountryInfo';
+import CountryInfo from '../utils/CountryInfo';
 
 const PATH_BASE = 'https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu';
 const PATH_TIMESERIES = '/timeseries';

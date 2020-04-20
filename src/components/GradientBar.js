@@ -54,6 +54,7 @@ export default function GradientBar({
         style={{
           top: '110%',
           position: 'absolute',
+          color: 'rgba(20,23,25,0.5)',
         }}
       >
         <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>

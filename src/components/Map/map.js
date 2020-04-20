@@ -6,7 +6,8 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 
 import './map.css';
-import GradientBar from '../../utils/GradientBar';
+import GradientBar from '../GradientBar';
+import InfoBox from '../InfoBox';
 import geoJSON from '../../data/countries.geo.json';
 
 export default class Maps extends Component {
@@ -23,6 +24,7 @@ export default class Maps extends Component {
       zoomSnap: 0.90,
       fractionMode: true,
       status: 'Infected Percentage of Population',
+      currentCountry: null,
     };
   }
 
@@ -79,13 +81,12 @@ export default class Maps extends Component {
   }
 
   highlightCountry = ({ target }) => {
+    this.setState({ currentCountry: target.feature.properties.iso_a2 });
     target.setStyle({
       weight: 4,
       color: '#666',
       fillOpacity: 0.7,
     });
-
-    // this.info.update(target.feature.properties);
   };
 
   resetHighlight = ({ target }) => {
@@ -107,7 +108,7 @@ export default class Maps extends Component {
 
   render() {
     const {
-      lat, lng, zoom, zoomSnap, fractionMode, status,
+      lat, lng, zoom, zoomSnap, fractionMode, status, currentCountry,
     } = this.state;
 
     const { curDate, countryData, populationData } = this.props;
@@ -142,6 +143,10 @@ export default class Maps extends Component {
             data={geoJSON}
             style={this.styleMap}
             onEachFeature={this.onEachFeature}
+          />
+          <InfoBox
+            countryData={this.todaysData ? this.todaysData[currentCountry] : null}
+            population={populationData ? populationData[currentCountry] : null}
           />
           <GradientBar
             rgbStart={255}
