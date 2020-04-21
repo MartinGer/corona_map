@@ -40,8 +40,8 @@ export default class App extends Component {
     } = this.state;
 
     return (
-      <div className="App">
-        <div className="Components">
+      <div className="app">
+        <div className="components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
           <Map curDate={curDate} countryData={countryData} populationData={populationData} />
         </div>

@@ -24,22 +24,22 @@ export default function InfoBox({ countryData, population }) {
               {(confirmed || '-').toLocaleString()}
             </div>
             <div className="bar">
-              <div className="slice" style={{ background: 'rgb(255, 64, 0)', width: `${infectedPercentage}%`, marginRight: '4px' }} />
-              <div className="slice" style={{ background: 'rgb(96, 187, 105)', width: `${recoveredPercentage}%`, marginRight: '4px' }} />
-              <div className="slice" style={{ background: 'rgb(0, 0, 0)', width: `${deathsPercentage}%` }} />
+              <div className="slice red" style={{ width: `${infectedPercentage}%` }} />
+              <div className="slice green" style={{ width: `${recoveredPercentage}%` }} />
+              <div className="slice black" style={{ width: `${deathsPercentage}%` }} />
             </div>
             <div className="infoLine">
-              <div className="circle" style={{ background: 'rgb(255, 64, 0)' }} />
+              <div className="circle red" />
               <div className="infoLineText">Currently Infected:</div>
               <div className="infoLineData">{(infected || '-').toLocaleString()}</div>
             </div>
             <div className="infoLine">
-              <div className="circle" style={{ background: 'rgb(96, 187, 105)' }} />
+              <div className="circle green" />
               <div className="infoLineText">Recovered:</div>
               <div className="infoLineData">{(recovered || '-').toLocaleString()}</div>
             </div>
             <div className="infoLine">
-              <div className="circle" style={{ background: 'rgb(0, 0, 0)' }} />
+              <div className="circle black" />
               <div className="infoLineText">Deaths:</div>
               <div className="infoLineData">{(deaths || '-').toLocaleString()}</div>
             </div>

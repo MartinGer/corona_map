@@ -123,32 +123,32 @@ export default class CountryList extends Component {
     }
 
     return (
-      <div className="CountryList">
+      <div className="countryList">
         <table className="table table-dark">
           <thead>
             <tr>
-              <th scope="col" className="header">
+              <th>
                 State
                 <button type="button" id="countryButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
+                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
-              <th scope="col" className="header">
+              <th>
                 Infected
                 <button type="button" id="confirmedButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
+                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
-              <th scope="col" className="header">
+              <th>
                 Deaths
                 <button type="button" id="deathsButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
+                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
-              <th scope="col" className="header">
+              <th>
                 Recovered
                 <button type="button" id="recoveredButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon style={{ color: 'white', pointerEvents: 'none' }} icon={sortTypes[sortBy][sortHow].class} />
+                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
                 </button>
               </th>
             </tr>

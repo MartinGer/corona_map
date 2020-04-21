@@ -64,3 +64,21 @@ h4 {
   float: left;
   font-size: 13px;
 }
+
+.red {
+  background: rgb(255, 64, 0);
+}
+
+.green {
+  background: rgb(96, 187, 105);
+}
+
+.black {
+  background: rgb(0, 0, 0);
+}
+
+.slice,
+.red,
+.green {
+  margin-right: 2px;
+}

@@ -1,9 +1,5 @@
-.CountryList {
+.countryList {
   width: 17%;
-}
-
-table {
-  width: 100%;
 }
 
 table tbody {
@@ -16,14 +12,20 @@ thead {
   overflow-y: scroll;
 }
 
-thead, tbody tr {
+thead,
+tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
 button {
-  border:none;
-  background-color: Transparent;
-  outline:none;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.icon {
+  color: white;
+  pointer-events: none;
 }

@@ -124,15 +124,12 @@ export default class Maps extends Component {
     }
 
     return (
-      <div className="MapContainer">
+      <div className="mapContainer">
         <Map
+          className="map"
           center={[lat, lng]}
           zoom={zoom}
           zoomSnap={zoomSnap}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
           worldCopyJump
         >
           <TileLayer
