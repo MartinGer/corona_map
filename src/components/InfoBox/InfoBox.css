@@ -1,8 +1,8 @@
 .infoBox {
-  padding: .75rem;
-  background: rgba(20,23,25,0.5);
-  box-shadow: 0 0 1rem rgba(0,0,0,0.2);
-  border-radius: .25rem;
+  padding: 0.75rem;
+  background: rgba(20, 23, 25, 0.5);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
   width: 18%;
   top: 1.5%;
   right: 1.5%;
@@ -11,6 +11,14 @@
   flex-direction: column;
   position: absolute;
   color: white;
+}
+
+h4 {
+  text-align: center;
+}
+
+.totalLine {
+  font-size: 16px;
 }
 
 .bar {
@@ -23,44 +31,36 @@
 }
 
 .slice {
-  border-radius: .15rem;
-}
-
-h4 {
-  text-align: center;
+  border-radius: 0.15rem;
 }
 
 .infoLine {
-  width: 100%; 
+  width: 100%;
   float: left;
-}
-
-.percentageLine {
-  width: 100%; 
-  float: left;
-  font-size: 13px;
 }
 
 .circle {
   width: 12px;
-  height: 12px; 
-  margin-top: 4px; 
-  border-radius: 50%; 
+  height: 12px;
+  margin-top: 4px;
+  border-radius: 50%;
   float: left;
-}
-
-.totalLine {
-  font-size: 16px;
 }
 
 .infoLineText {
   width: 45%;
   font-size: 14px;
-  margin-left: 6px; 
+  margin-left: 6px;
   float: left;
 }
 
 .infoLineData {
   font-size: 14px;
   float: left;
+}
+
+.percentageLine {
+  width: 100%;
+  float: left;
+  font-size: 13px;
 }
