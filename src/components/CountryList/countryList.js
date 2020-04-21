@@ -97,9 +97,9 @@ export default class CountryList extends Component {
       summarizedData = (
         <tr>
           <th scope="row">Global</th>
-          <td>{(fullData.infected - fullData.deaths - fullData.recovered).toLocaleString()}</td>
-          <td>{fullData.deaths.toLocaleString()}</td>
-          <td>{fullData.recovered.toLocaleString()}</td>
+          <td>{((fullData.infected - fullData.deaths - fullData.recovered) || '-').toLocaleString()}</td>
+          <td>{(fullData.deaths || '-').toLocaleString()}</td>
+          <td>{(fullData.recovered || '-').toLocaleString()}</td>
         </tr>
       );
     }
@@ -111,11 +111,11 @@ export default class CountryList extends Component {
             <tr>
               <th scope="row">{countryInfo.country}</th>
               <td>
-                {(countryInfo.confirmed - countryInfo.deaths - countryInfo.recovered)
-                  .toLocaleString()}
+                {((countryInfo.confirmed - countryInfo.deaths - countryInfo.recovered)
+                  || '-').toLocaleString()}
               </td>
-              <td>{countryInfo.deaths.toLocaleString()}</td>
-              <td>{countryInfo.recovered.toLocaleString()}</td>
+              <td>{(countryInfo.deaths || '-').toLocaleString()}</td>
+              <td>{(countryInfo.recovered || '-').toLocaleString()}</td>
             </tr>
           </React.Fragment>
         ))
