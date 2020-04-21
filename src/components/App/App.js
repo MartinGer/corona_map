@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import CountryList from '../CountryList/countryList';
-import Map from '../Map/map';
+import CountryList from '../CountryList/CountryList';
+import Map from '../Map/Map';
 import DataLoader from '../DataLoader';
 
 export default class App extends Component {

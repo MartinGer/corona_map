@@ -5,9 +5,9 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 
-import './map.css';
-import GradientBar from '../GradientBar';
-import InfoBox from '../InfoBox';
+import './Map.css';
+import GradientBar from '../GradientBar/GradientBar';
+import InfoBox from '../InfoBox/InfoBox';
 import geoJSON from '../../data/countries.geo.json';
 
 export default class Maps extends Component {
