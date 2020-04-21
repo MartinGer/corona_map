@@ -12,3 +12,15 @@
   align-items: center;
 }
 
+.legendPart {
+  top: 110%;
+  position: absolute;
+}
+
+.left {
+  left: 0%;
+}
+
+.right {
+  right: 0%;
+}

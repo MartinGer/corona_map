@@ -11,35 +11,20 @@ export default function GradientBar({
   return (
     <div
       className="legend"
-      style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart},${rgbStart},${rgbStart}), rgb(${rgbEnd},${rgbEnd},${rgbEnd}))` }}
-      >
-      <p style={{
-        top: '110%',
-        left: '0%',
-        position: 'absolute',
-      }}
-      >
+      style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${rgbEnd}, ${rgbEnd}, ${rgbEnd}))` }}
+    >
+      <p className="legendPart left">
         0
       </p>
-      <p style={{
-        top: '110%',
-        right: '0%',
-        position: 'absolute',
-      }}
-      >
+      <p className="legendPart right">
         { max.toLocaleString() }
       </p>
       <DropdownButton
         id="dropdown-item-button"
         title={status}
-        className="format"
+        className="legendPart"
         size="sm"
         variant="secondary"
-        style={{
-          top: '110%',
-          position: 'absolute',
-          color: 'rgba(20,23,25,0.5)',
-        }}
       >
         <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>
         <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToInfectedCases} onKeyDown={changeStatusToInfectedCases}> Confirmed Infections </div></Dropdown.Item>
