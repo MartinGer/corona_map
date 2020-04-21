@@ -43,7 +43,7 @@ export default function InfoBox({ countryData, population }) {
               >
                 {country}
               </h4>
-              <div style={{}}>
+              <div style={{ fontSize: '16px' }}>
                 Total Cases:
                 {' '}
                 {confirmed}
@@ -52,44 +52,53 @@ export default function InfoBox({ countryData, population }) {
                 className="bar"
                 style={{
                   height: '10px',
-                  width: '99%',
+                  width: '98%',
                   display: 'flex',
                   textAlign: 'center',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
+                  marginBottom: '5px',
+                  marginTop: '5px',
                 }}
               >
                 <div
                   className="slice"
                   style={{
-                    background: 'rgb(255, 64, 0)', width: `${infectedPercentage}%`, marginRight: '4px', borderRadius: '.2rem',
+                    background: 'rgb(255, 64, 0)', width: `${infectedPercentage}%`, marginRight: '4px', borderRadius: '.15rem',
                   }}
                 />
                 <div
                   className="slice"
                   style={{
-                    background: 'rgb(96, 187, 105)', width: `${recoveredPercentage}%`, marginRight: '4px', borderRadius: '.2rem',
+                    background: 'rgb(96, 187, 105)', width: `${recoveredPercentage}%`, marginRight: '4px', borderRadius: '.15rem',
                   }}
                 />
-                <div className="slice" style={{ background: 'rgb(0, 0, 0)', width: `${deathsPercentage}%`, borderRadius: '.2rem' }} />
+                <div className="slice" style={{ background: 'rgb(0, 0, 0)', width: `${deathsPercentage}%`, borderRadius: '.15rem' }} />
               </div>
-              <div style={{}}>
-                Currently Infected:
-                {' '}
-                {infected}
+              <div style={{ width: '100%', float: 'left' }}>
+                <div style={{
+                  background: 'rgb(255, 64, 0)', width: '12px', height: '12px', marginTop: '4px', borderRadius: '50%', float: 'left',
+                }}
+                />
+                <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px'}}>Currently Infected:</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{infected}</div>
               </div>
-              <div style={{}}>
-                Recovered:
-                {' '}
-                {recovered}
+              <div style={{ width: '100%', float: 'left' }}>
+                <div style={{
+                  background: 'rgb(96, 187, 105)', width: '12px', height: '12px', marginTop: '4px', borderRadius: '50%', float: 'left',
+                }}
+                />
+                <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px' }}>Recovered:</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{recovered}</div>
               </div>
-              <div style={{}}>
-                Deaths:
-                {' '}
-                {deaths}
+              <div style={{ width: '100%', float: 'left' }}>
+                <div style={{
+                  background: 'rgb(0, 0, 0)', width: '12px', height: '12px', marginTop: '4px', borderRadius: '50%', float: 'left',
+                }}
+                />
+                <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px' }}>Deaths:</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{deaths}</div>
               </div>
               <div style={{}} />
-              <div style={{}}>
+              <div style={{ width: '100%', float: 'left', fontSize: '13px' }}>
                 ~
                 {((infected / population) * 100).toFixed(2)}
                 % of
