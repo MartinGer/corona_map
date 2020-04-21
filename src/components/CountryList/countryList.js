@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
-import './countryList.css';
+import './CountryList.css';
 import compareValues from '../../utils/UtilFunctions';
 
 library.add(faCaretDown, faCaretUp);
