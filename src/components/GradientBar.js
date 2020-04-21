@@ -43,7 +43,7 @@ export default function GradientBar({
         position: 'absolute',
       }}
       >
-        { max }
+        { max.toLocaleString() }
       </p>
       <DropdownButton
         id="dropdown-item-button"

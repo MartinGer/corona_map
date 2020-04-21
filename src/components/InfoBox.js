@@ -46,7 +46,7 @@ export default function InfoBox({ countryData, population }) {
               <div style={{ fontSize: '16px' }}>
                 Total Cases:
                 {' '}
-                {confirmed}
+                {confirmed.toLocaleString()}
               </div>
               <div
                 className="bar"
@@ -79,7 +79,7 @@ export default function InfoBox({ countryData, population }) {
                 }}
                 />
                 <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px'}}>Currently Infected:</div>
-                <div style={{ float: 'left', fontSize: '14px' }}>{infected}</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{infected.toLocaleString()}</div>
               </div>
               <div style={{ width: '100%', float: 'left' }}>
                 <div style={{
@@ -87,7 +87,7 @@ export default function InfoBox({ countryData, population }) {
                 }}
                 />
                 <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px' }}>Recovered:</div>
-                <div style={{ float: 'left', fontSize: '14px' }}>{recovered}</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{recovered.toLocaleString()}</div>
               </div>
               <div style={{ width: '100%', float: 'left' }}>
                 <div style={{
@@ -95,7 +95,7 @@ export default function InfoBox({ countryData, population }) {
                 }}
                 />
                 <div style={{ width: '45%', float: 'left', fontSize: '14px', marginLeft: '6px' }}>Deaths:</div>
-                <div style={{ float: 'left', fontSize: '14px' }}>{deaths}</div>
+                <div style={{ float: 'left', fontSize: '14px' }}>{deaths.toLocaleString()}</div>
               </div>
               <div style={{}} />
               <div style={{ width: '100%', float: 'left', fontSize: '13px' }}>
@@ -103,7 +103,7 @@ export default function InfoBox({ countryData, population }) {
                 {((infected / population) * 100).toFixed(2)}
                 % of
                 {' '}
-                {population}
+                {population.toLocaleString()}
                 {' '}
                 people are currently infected
               </div>
