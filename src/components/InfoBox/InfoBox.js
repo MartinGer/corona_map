@@ -20,7 +20,9 @@ export default function InfoBox({ countryData, population }) {
             <div style={{ textAlign: 'left' }}>
               <h4>{country}</h4>
               <div className="totalLine">
-                Total Cases:{' '}{(confirmed || '-').toLocaleString()}
+                Total Cases:
+                {' '}
+                {(confirmed || '-').toLocaleString()}
               </div>
               <div className="bar">
                 <div className="slice" style={{ background: 'rgb(255, 64, 0)', width: `${infectedPercentage}%`, marginRight: '4px' }} />
@@ -43,7 +45,13 @@ export default function InfoBox({ countryData, population }) {
                 <div className="infoLineData">{(deaths || '-').toLocaleString()}</div>
               </div>
               <div className="percentageLine">
-                ~{((infected / population) * 100).toFixed(2)}% of{' '}{population.toLocaleString()}{' '}people are currently infected
+                ~
+                {((infected / population) * 100).toFixed(2)}
+                % of
+                {' '}
+                {population.toLocaleString()}
+                {' '}
+                people are currently infected
               </div>
             </div>
           </div>
