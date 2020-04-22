@@ -16,7 +16,7 @@ export default function InfoBox({ countryData, population }) {
     <div>
       {!(Object.keys(countryData).length === 0) && population
         ? (
-          <div className="infoBox" style={{ textAlign: 'left' }}>
+          <div className="infoBox">
             <h4>{country}</h4>
             <div className="totalLine">
               Total Cases:
