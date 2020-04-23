@@ -136,46 +136,58 @@ export default class CountryList extends Component {
     }
 
     return (
-      <div className="countryList">
-        <table className="table table-dark">
-          <thead>
-            <tr>
-              <th>
-                State
-                <button type="button" id="countryButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
+      <div className="countryListContainer">
+        {!(hidden)
+          ? (
+            <div className="countryList">
+              <table className="table table-dark">
+                <thead>
+                  <tr>
+                    <th>
+                      <div>State</div>
+                      <button type="button" id="countryButton" onClick={(e) => this.sort(e.target.id)}>
+                        <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
+                      </button>
+                    </th>
+                    <th>
+                      <div>Infected</div>
+                      <button type="button" id="confirmedButton" onClick={(e) => this.sort(e.target.id)}>
+                        <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
+                      </button>
+                    </th>
+                    <th>
+                      <div>Deaths</div>
+                      <button type="button" id="deathsButton" onClick={(e) => this.sort(e.target.id)}>
+                        <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
+                      </button>
+                    </th>
+                    <th>
+                      <div>Recovered</div>
+                      <button type="button" id="recoveredButton" onClick={(e) => this.sort(e.target.id)}>
+                        <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summarizedData}
+                  {seperateData}
+                </tbody>
+              </table>
+              <div className="hideArea">
+                <button type="button" className="hideButton" onClick={() => this.changeCountryList()}>
+                  <FontAwesomeIcon size="2x" className="icon" icon={hidden ? 'angle-right' : 'angle-left'} />
                 </button>
-              </th>
-              <th>
-                Infected
-                <button type="button" id="confirmedButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
-                </button>
-              </th>
-              <th>
-                Deaths
-                <button type="button" id="deathsButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
-                </button>
-              </th>
-              <th>
-                Recovered
-                <button type="button" id="recoveredButton" onClick={(e) => this.sort(e.target.id)}>
-                  <FontAwesomeIcon className="icon" icon={sortTypes[sortBy][sortHow].class} />
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {summarizedData}
-            {seperateData}
-          </tbody>
-        </table>
-        <div className="hideArea">
-          <button type="button" className="hideButton" onClick={() => this.changeCountryList()}>
-            <FontAwesomeIcon size={120} className="hideIcon icon" icon={hidden ? 'angle-right' : 'angle-left'} />
-          </button>
-        </div>
+              </div>
+            </div>
+          )
+          : (
+            <div className="showArea">
+              <button type="button" className="showButton" onClick={() => this.changeCountryList()}>
+                <FontAwesomeIcon size="2x" className="icon" icon={hidden ? 'angle-right' : 'angle-left'} />
+              </button>
+            </div>
+          )}
       </div>
     );
   }
