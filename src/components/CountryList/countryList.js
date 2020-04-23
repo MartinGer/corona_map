@@ -91,10 +91,8 @@ export default class CountryList extends Component {
   changeCountryList = () => {
     const { hidden } = this.state;
     if (!hidden) {
-      console.log('hide');
       this.setState({ hidden: true });
     } else {
-      console.log('show');
       this.setState({ hidden: false });
     }
   }
@@ -176,7 +174,7 @@ export default class CountryList extends Component {
               </table>
               <div className="hideArea">
                 <button type="button" className="hideButton" onClick={() => this.changeCountryList()}>
-                  <FontAwesomeIcon size="2x" className="icon" icon={hidden ? 'angle-right' : 'angle-left'} />
+                  <FontAwesomeIcon size="2x" className="icon" icon={faAngleLeft} />
                 </button>
               </div>
             </div>
@@ -184,7 +182,7 @@ export default class CountryList extends Component {
           : (
             <div className="showArea">
               <button type="button" className="showButton" onClick={() => this.changeCountryList()}>
-                <FontAwesomeIcon size="2x" className="icon" icon={hidden ? 'angle-right' : 'angle-left'} />
+                <FontAwesomeIcon size="2x" className="icon" icon={faAngleRight} />
               </button>
             </div>
           )}
