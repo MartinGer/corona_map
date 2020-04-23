@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretDown, faCaretUp, faAngleLeft, faAngleRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 import './CountryList.css';
 import compareValues from '../../utils/UtilFunctions';
 
-library.add(faCaretDown, faCaretUp);
+library.add(faCaretDown, faCaretUp, faAngleLeft, faAngleRight);
 
 const sortTypes = {
   country: {
@@ -51,15 +53,6 @@ const sortTypes = {
       class: 'caret-down',
       fn: compareValues('recovered', 'desc'),
     },
-  },
-};
-
-const hideTypes = {
-  hide: {
-    class: 'caret-left',
-  },
-  show: {
-    class: 'caret-right',
   },
 };
 
@@ -180,7 +173,7 @@ export default class CountryList extends Component {
         </table>
         <div className="hideArea">
           <button type="button" className="hideButton" onClick={() => this.changeCountryList()}>
-            <FontAwesomeIcon className="hideIcon icon" icon={hidden ? 'caret-right' : 'caret-left'} />
+            <FontAwesomeIcon size={120} className="hideIcon icon" icon={hidden ? 'angle-right' : 'angle-left'} />
           </button>
         </div>
       </div>

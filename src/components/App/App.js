@@ -49,8 +49,3 @@ export default class App extends Component {
     );
   }
 }
-
-export {
-  CountryList,
-  Map,
-};
