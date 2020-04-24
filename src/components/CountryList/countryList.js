@@ -167,7 +167,7 @@ export default class CountryList extends Component {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="tableContainer">
                   {summarizedData}
                   {seperateData}
                 </tbody>

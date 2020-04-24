@@ -11,16 +11,17 @@
 
 .table {
   margin-bottom: 0;
+  height: calc(100% - 25px);
 }
 
-table tbody {
+.tableContainer {
   display: block;
   overflow-y: scroll;
-  height: 92vh;
+  height: calc(100vh - 85px);
 }
 
 thead {
-  height: 5vh;
+  height: 60px;
 }
 
 thead,
@@ -42,7 +43,7 @@ button {
 }
 
 .hideArea {
-  height: 3vh;
+  height: 25px;
   background: rgb(69, 77, 85);
   text-align: right;
   bottom: 0;
@@ -54,8 +55,8 @@ button {
 }
 
 .showArea {
-  height: 3vh;
-  width: 3vh;
+  height: 25px;
+  width: 25px;
   background: rgb(69, 77, 85);
   z-index: 500;
   position: absolute;
