@@ -10,18 +10,14 @@ export default function GradientBar({
 }) {
   return (
     <div className="legend">
-
       <div
         className="legendBar"
         style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${rgbEnd}, ${rgbEnd}, ${rgbEnd}))` }}
-      >
-      </div>
+      />
       <div className="legendText">
-
         <p className="left">
           0
         </p>
-
         <DropdownButton
           id="dropdown-item-button"
           title={status}
@@ -31,14 +27,10 @@ export default function GradientBar({
           <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>
           <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToInfectedCases} onKeyDown={changeStatusToInfectedCases}> Confirmed Infections </div></Dropdown.Item>
         </DropdownButton>
-
         <p className="right">
           { max.toLocaleString() }
         </p>
-
       </div>
-
-      
     </div>
   );
 }
