@@ -9,26 +9,36 @@ export default function GradientBar({
   rgbStart, rgbEnd, max, changeStatusToFraction, changeStatusToInfectedCases, status,
 }) {
   return (
-    <div
-      className="legend"
-      style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${rgbEnd}, ${rgbEnd}, ${rgbEnd}))` }}
-    >
-      <p className="legendPart left">
-        0
-      </p>
-      <p className="legendPart right">
-        { max.toLocaleString() }
-      </p>
-      <DropdownButton
-        id="dropdown-item-button"
-        title={status}
-        className="legendPart"
-        size="sm"
-        variant="secondary"
+    <div className="legend">
+
+      <div
+        className="legendBar"
+        style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${rgbEnd}, ${rgbEnd}, ${rgbEnd}))` }}
       >
-        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>
-        <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToInfectedCases} onKeyDown={changeStatusToInfectedCases}> Confirmed Infections </div></Dropdown.Item>
-      </DropdownButton>
+      </div>
+      <div className="legendText">
+
+        <p className="left">
+          0
+        </p>
+
+        <DropdownButton
+          id="dropdown-item-button"
+          title={status}
+          size="sm"
+          variant="secondary"
+        >
+          <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToFraction} onKeyDown={changeStatusToFraction}> Infected Percentage of Population </div></Dropdown.Item>
+          <Dropdown.Item as="button"><div role="button" tabIndex={0} onClick={changeStatusToInfectedCases} onKeyDown={changeStatusToInfectedCases}> Confirmed Infections </div></Dropdown.Item>
+        </DropdownButton>
+
+        <p className="right">
+          { max.toLocaleString() }
+        </p>
+
+      </div>
+
+      
     </div>
   );
 }

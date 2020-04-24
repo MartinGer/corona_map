@@ -1,8 +1,6 @@
 .legend {
-  border: solid;
-  border-width: thin;
   width: 20%;
-  height: 1.5%;
+  height: 5%;
   position: absolute;
   bottom: 4%;
   right: 3%;
@@ -12,15 +10,26 @@
   align-items: center;
 }
 
-.legendPart {
-  top: 110%;
-  position: absolute;
+.legendBar {
+  min-height: 1vh;
+  height: 25%;
+  width: 100%;
+  border: solid;
+  border-width: thin;
+}
+
+.legendText {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1%;
 }
 
 .left {
-  left: 0%;
+  float: left;
 }
 
 .right {
-  right: 0%;
+  float: right;
 }
