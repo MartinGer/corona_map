@@ -4,6 +4,7 @@ import './App.css';
 import CountryList from '../CountryList/CountryList';
 import Map from '../Map/Map';
 import DataLoader from '../DataLoader';
+import Timeseries from '../Timeseries/Timeseries';
 
 export default class App extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ export default class App extends Component {
         <div className="components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
           <Map curDate={curDate} countryData={countryData} populationData={populationData} />
+          <Timeseries countryData={countryData} />
         </div>
       </div>
     );

@@ -139,7 +139,6 @@ export default class Maps extends Component {
             data={geoJSON}
             style={this.styleMap}
             onEachFeature={this.onEachFeature}
-
           />
           <InfoBox
             countryData={this.todaysData ? this.todaysData[currentCountry] : null}
