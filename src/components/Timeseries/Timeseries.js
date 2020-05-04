@@ -2,12 +2,13 @@
 import React, { Component } from 'react';
 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
+import 'rc-slider/assets/index.css';
+import Slider, { createSliderWithTooltip } from 'rc-slider';
 import PropTypes from 'prop-types';
 
 import './Timeseries.css';
+
+const SliderWithTooltip = createSliderWithTooltip(Slider);
 
 export default class Timeseries extends Component {
   constructor(props) {
@@ -54,18 +55,8 @@ export default class Timeseries extends Component {
         { this.dates.length > 0
           ? (
             <div className="timeSliderContainer">
-              <Typography id="discrete-slider-small-steps" gutterBottom>
-                Date
-              </Typography>
-              <Slider
-                defaultValue={this.marks.length - 1}
-                // getAriaValueText={this.valueText}
-                getAriaLabel={this.thumbText}
-                aria-labelledby="discrete-slider-small-steps"
-                step={null}
-                marks={this.marks}
-                valueLabelDisplay="on"
-              />
+              <p>Range with custom tooltip</p>
+              <SliderWithTooltip marks={this.marks} defaultValue={105} tipFormatter={this.thumbText} valueLabelDisplay="on" />
             </div>
           )
           : null}
