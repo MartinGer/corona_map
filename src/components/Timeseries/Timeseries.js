@@ -33,7 +33,6 @@ export default class Timeseries extends Component {
 
   valueText = (value) => {
     if (value === 0 || value === this.marks.length - 1) {
-      console.log(this.marks[value].label);
       return this.marks[value].label;
     }
     return '';
@@ -49,7 +48,6 @@ export default class Timeseries extends Component {
       this.buildMarks(this.dates);
     }
 
-    console.log(this.dates, curDate, this.marks);
     return (
       <div>
         { this.dates.length > 0

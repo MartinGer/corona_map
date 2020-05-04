@@ -45,7 +45,7 @@ export default class App extends Component {
         <div className="components">
           <CountryList curDate={curDate} fullData={fullData} countryData={countryData} />
           <Map curDate={curDate} countryData={countryData} populationData={populationData} />
-          <Timeseries curDate={curDate} countryData={countryData} />
+          {/* <Timeseries curDate={curDate} countryData={countryData} /> */}
         </div>
       </div>
     );
