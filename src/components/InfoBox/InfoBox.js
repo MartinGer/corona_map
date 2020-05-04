@@ -15,9 +15,11 @@ const fillDataPoints = (countryData, country) => {
     Object.entries(value).forEach((countryInfo) => {
       if (countryInfo[1].country === country) {
         const [month, day, year] = key.split('/');
+        const infected = countryInfo[1].confirmed - countryInfo[1].recovered
+         - countryInfo[1].deaths;
         dataPointsInfected.push({
           x: new Date(year, month, day),
-          y: countryInfo[1].confirmed - countryInfo[1].recovered - countryInfo[1].deaths,
+          y: infected >= 0 ? infected : 0,
         });
         dataPointsRecovered.push({ x: new Date(year, month, day), y: countryInfo[1].recovered });
         dataPointsDeaths.push({ x: new Date(year, month, day), y: countryInfo[1].deaths });
