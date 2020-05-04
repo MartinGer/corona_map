@@ -141,8 +141,9 @@ export default class Maps extends Component {
             onEachFeature={this.onEachFeature}
           />
           <InfoBox
-            countryData={this.todaysData ? this.todaysData[currentCountry] : null}
+            todaysData={this.todaysData ? this.todaysData[currentCountry] : null}
             population={populationData ? populationData[currentCountry] : null}
+            countryData={countryData || null}
           />
           <GradientBar
             rgbStart={255}
