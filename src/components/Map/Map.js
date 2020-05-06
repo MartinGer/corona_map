@@ -36,7 +36,7 @@ export default class Maps extends Component {
       const infectedFraction = currentInfected / populationData[countryCode];
       const rgb = (255
         - Math.round((infectedFraction / this.maxInfectedFraction) * 255));
-      return `rgb(${rgb},${rgb},${rgb})`;
+      return `rgb(${255},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
   };
@@ -47,7 +47,7 @@ export default class Maps extends Component {
       const currentInfected = confirmed - deaths - recovered;
       const rgb = (255
         - Math.round((currentInfected / this.maxInfected) * 255));
-      return `rgb(${rgb},${rgb},${rgb})`;
+      return `rgb(${255},${rgb},${rgb})`;
     }
     return 'rgb(255,255,255)';
   };
