@@ -2,6 +2,8 @@ Sources:
 - API Service for tracking the COVID-19 - This repository provides API Service for tracking the Coronavirus(COVID-19) using Novel Coronavirus (COVID-19) Caseslink, provided by JHU CSSE.: https://ainize.ai/laeyoung/wuhan-coronavirus-api
 - Country Polygons as GeoJSON: https://datahub.io/core/geo-countries#python
 
+TODO: - planned to add a time slider to colorize map for the picked date
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
