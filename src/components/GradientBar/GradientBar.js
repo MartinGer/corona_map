@@ -12,7 +12,7 @@ export default function GradientBar({
     <div className="legend">
       <div
         className="legendBar"
-        style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${rgbEnd}, ${rgbEnd}, ${rgbEnd}))` }}
+        style={{ backgroundImage: `linear-gradient(to right, rgb(${rgbStart}, ${rgbStart}, ${rgbStart}), rgb(${255}, ${rgbEnd}, ${rgbEnd}))` }}
       />
       <div className="legendText">
         <p className="left">
